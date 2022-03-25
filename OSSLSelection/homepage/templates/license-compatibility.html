@@ -1,0 +1,84 @@
+{% extends 'ossls_base.html' %}
+
+{% block title %}
+	开源许可证兼容性判断
+{% endblock %}
+
+{% block body %}
+			<div class="row">
+				<div class="section-heading-3">
+				</div>
+			</div>
+			<div class="container">
+				<div class="row justify-items-center">
+					<div class="col-6 col-md-4">
+					</div>
+					<div class="col-4 col-md-2 alert alert-info" role="alert" style="text-align:center">
+						A许可证
+					</div>
+					<div class="col-6 col-md-4">
+						<select id="A_license" class="btn btn-light" style="width:250px;height:50px;text-align:center">
+							{% for license in licenses %}
+								<option value="{{license}}">{{license}}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="row justify-items-center">
+					<div class="col-6 col-md-4">
+					</div>
+					<div class="col-4 col-md-2  alert alert-info" role="alert" style="text-align:center">
+						B许可证
+					</div>
+					<div class="col-6 col-md-4">
+						<select id="B_license" class="btn btn-light" style="width:250px;height:50px;text-align:center">
+							{% for license in licenses %}
+								<option value="{{license}}">{{license}}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col" align="center">
+						<div class="comment-field">
+							<button id="compatibility_judge">开始判断</button>
+						</div>
+					</div>
+				</div>
+				<div class="jumbotron jumbotron-fluid" style="margin:25px 5px 5px 15px">
+					<div class="container">
+						<p id="compatibility_result"></p>
+					</div>
+				</div>
+			</div>
+			<p style="font-size:15px">说明：许可证的兼容性是有方向的。
+				开源许可证A授权的软件经过修改，所产生的衍生软件可以使用开源许可证B重新授权，则A兼容B，原A授权的代码将变更为B授权；
+				开源许可证A授权的软件，可以与开源许可证B授权的软件组合，且组合软件的整体使用开源许可证B授权分发，则A组合兼容B，原A授权的代码仍然遵循A。
+				当开源许可证A不能通过上述两种兼容场景与开源许可证B兼容时，则A不兼容B。
+			</p>
+{% endblock %}
+
+{% block extraJS %}
+	<script>
+		$("#compatibility_judge").click(function(e){
+			$.ajax({
+				dataType: 'JSON',
+				cache: false,
+				async: true,
+				type: 'POST',
+				url:"{% url 'ossls:license_compatibility_judge' %}",
+				data:{
+					licenseA:$("#A_license").find("option:selected").text(),
+					licenseB:$("#B_license").find("option:selected").text(),
+				},
+				beforeSend:function(xhr,settings){
+					xhr.setRequestHeader("X-CSRFToken","{{csrf_token}}");
+				},
+				success:function(result){
+					$("#compatibility_result").text(result['iscompatibility'])
+				},
+			})
+		});
+
+	</script>
+{% endblock %}

@@ -1,0 +1,225 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 139776 bytes for Chunk::new
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (allocation.cpp:389), pid=213216, tid=0x000000000003440c
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_321-b07) (build 1.8.0_321-b07)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.321-b07 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000002691f606800):  JavaThread "C2 CompilerThread2" daemon [_thread_in_native, id=214028, stack(0x0000008e5cc00000,0x0000008e5cd00000)]
+
+Stack: [0x0000008e5cc00000,0x0000008e5cd00000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x32fc49]
+V  [jvm.dll+0x2761a2]
+V  [jvm.dll+0x276e4d]
+V  [jvm.dll+0x26d7f5]
+V  [jvm.dll+0xd5a0c]
+V  [jvm.dll+0xd620c]
+V  [jvm.dll+0x4541c2]
+V  [jvm.dll+0x48f27d]
+V  [jvm.dll+0x443e51]
+V  [jvm.dll+0x440ffb]
+V  [jvm.dll+0x42becb]
+V  [jvm.dll+0xac68b]
+V  [jvm.dll+0xaaceb]
+V  [jvm.dll+0x23e6f2]
+V  [jvm.dll+0x292edc]
+C  [ucrtbase.dll+0x21bb2]
+C  [KERNEL32.DLL+0x17034]
+C  [ntdll.dll+0x52651]
+
+
+Current CompileTask:
+C2:   1118  726 %     4       org.antlr.v4.runtime.misc.IntervalSet::add @ 39 (216 bytes)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x0000026921a37000 JavaThread "Service Thread" daemon [_thread_blocked, id=214060, stack(0x0000008e5ce00000,0x0000008e5cf00000)]
+  0x000002691f60b800 JavaThread "C1 CompilerThread3" daemon [_thread_blocked, id=214040, stack(0x0000008e5cd00000,0x0000008e5ce00000)]
+=>0x000002691f606800 JavaThread "C2 CompilerThread2" daemon [_thread_in_native, id=214028, stack(0x0000008e5cc00000,0x0000008e5cd00000)]
+  0x000002691f5ff800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=214024, stack(0x0000008e5cb00000,0x0000008e5cc00000)]
+  0x000002691f5fc800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=213668, stack(0x0000008e5ca00000,0x0000008e5cb00000)]
+  0x00000269219e3000 JavaThread "Attach Listener" daemon [_thread_blocked, id=213400, stack(0x0000008e5c900000,0x0000008e5ca00000)]
+  0x00000269219e2800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=213336, stack(0x0000008e5c800000,0x0000008e5c900000)]
+  0x000002691f5b3000 JavaThread "Finalizer" daemon [_thread_blocked, id=213892, stack(0x0000008e5c700000,0x0000008e5c800000)]
+  0x000002691f588800 JavaThread "Reference Handler" daemon [_thread_blocked, id=213824, stack(0x0000008e5c600000,0x0000008e5c700000)]
+  0x0000026908ff0800 JavaThread "main" [_thread_in_native, id=213476, stack(0x0000008e5ba00000,0x0000008e5bb00000)]
+
+Other Threads:
+  0x000002691f57f800 VMThread [stack: 0x0000008e5c500000,0x0000008e5c600000] [id=213900]
+  0x0000026921a6f800 WatcherThread [stack: 0x0000008e5cf00000,0x0000008e5d000000] [id=214064]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+heap address: 0x0000000082400000, size: 2012 MB, Compressed Oops mode: 32-bit
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 3
+Compressed class space size: 1073741824 Address: 0x0000000100000000
+
+Heap:
+ PSYoungGen      total 37888K, used 1604K [0x00000000d6180000, 0x00000000d8b80000, 0x0000000100000000)
+  eden space 32768K, 4% used [0x00000000d6180000,0x00000000d63112f0,0x00000000d8180000)
+  from space 5120K, 0% used [0x00000000d8180000,0x00000000d8180000,0x00000000d8680000)
+  to   space 5120K, 0% used [0x00000000d8680000,0x00000000d8680000,0x00000000d8b80000)
+ ParOldGen       total 63488K, used 7183K [0x0000000082400000, 0x0000000086200000, 0x00000000d6180000)
+  object space 63488K, 11% used [0x0000000082400000,0x0000000082b03d98,0x0000000086200000)
+ Metaspace       used 12119K, capacity 12332K, committed 12544K, reserved 1062912K
+  class space    used 1376K, capacity 1450K, committed 1536K, reserved 1048576K
+
+Card table byte_map: [0x000002691a2b0000,0x000002691a6a0000] byte_map_base: 0x0000026919e9e000
+
+Marking Bits: (ParMarkBitMap*) 0x000000005b289030
+ Begin Bits: [0x000002691a940000, 0x000002691c8b0000)
+ End Bits:   [0x000002691c8b0000, 0x000002691e820000)
+
+Polling page: 0x000002690a9d0000
+
+CodeCache: size=245760Kb used=3007Kb max_used=3007Kb free=242752Kb
+ bounds [0x000002690aef0000, 0x000002690b1f0000, 0x0000026919ef0000]
+ total_blobs=1117 nmethods=757 adapters=273
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 1.070 Thread 0x000002691f5fc800  730       4       java.util.ArrayList::get (11 bytes)
+Event: 1.070 Thread 0x000002691f5fc800 nmethod 730 0x000002690b1c8cd0 code [0x000002690b1c8e00, 0x000002690b1c8eb8]
+Event: 1.071 Thread 0x000002691f60b800 nmethod 727 0x000002690b1cd990 code [0x000002690b1cdc80, 0x000002690b1cf3f0]
+Event: 1.071 Thread 0x000002691f60b800  737       3       org.antlr.v4.runtime.atn.ATNState::getNumberOfTransitions (10 bytes)
+Event: 1.071 Thread 0x000002691f60b800 nmethod 737 0x000002690b1cd510 code [0x000002690b1cd680, 0x000002690b1cd8b0]
+Event: 1.071 Thread 0x000002691f60b800  729       3       java.util.ArrayList::isEmpty (13 bytes)
+Event: 1.071 Thread 0x000002691f60b800 nmethod 729 0x000002690b1cd190 code [0x000002690b1cd2e0, 0x000002690b1cd498]
+Event: 1.071 Thread 0x000002691f60b800  733       3       org.antlr.v4.runtime.atn.Transition::<init> (24 bytes)
+Event: 1.071 Thread 0x000002691f60b800 nmethod 733 0x000002690b1c75d0 code [0x000002690b1c7740, 0x000002690b1c7a10]
+Event: 1.071 Thread 0x000002691f60b800  732       3       org.antlr.v4.runtime.atn.ATNDeserializer::edgeFactory (306 bytes)
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (1 events):
+Event: 0.553 Thread 0x0000026908ff0800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x000002690b0e7d9c method=java.lang.String.indexOf([CII[CIII)I @ 3
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (10 events):
+Event: 0.358 Thread 0x0000026908ff0800 Exception <a 'java/lang/ClassNotFoundException': org/apache/log4j/RollingFileAppenderBeanInfo> (0x00000000d6575488) thrown at [C:\jenkins\workspace\8-2-build-windows-amd64-cygwin\jdk8u321\2141\hotspot\src\share\vm\classfile\systemDictionary.cpp, line 212]
+Event: 0.358 Thread 0x0000026908ff0800 Exception <a 'java/lang/ClassNotFoundException': org/apache/log4j/FileAppenderBeanInfo> (0x00000000d6577638) thrown at [C:\jenkins\workspace\8-2-build-windows-amd64-cygwin\jdk8u321\2141\hotspot\src\share\vm\classfile\systemDictionary.cpp, line 212]
+Event: 0.358 Thread 0x0000026908ff0800 Exception <a 'java/lang/ClassNotFoundException': org/apache/log4j/WriterAppenderBeanInfo> (0x00000000d65799f0) thrown at [C:\jenkins\workspace\8-2-build-windows-amd64-cygwin\jdk8u321\2141\hotspot\src\share\vm\classfile\systemDictionary.cpp, line 212]
+Event: 0.358 Thread 0x0000026908ff0800 Exception <a 'java/lang/ClassNotFoundException': org/apache/log4j/AppenderSkeletonBeanInfo> (0x00000000d657be38) thrown at [C:\jenkins\workspace\8-2-build-windows-amd64-cygwin\jdk8u321\2141\hotspot\src\share\vm\classfile\systemDictionary.cpp, line 212]
+Event: 0.358 Thread 0x0000026908ff0800 Exception <a 'java/lang/ClassNotFoundException': org/apache/log4j/AppenderSkeletonCustomizer> (0x00000000d657e228) thrown at [C:\jenkins\workspace\8-2-build-windows-amd64-cygwin\jdk8u321\2141\hotspot\src\share\vm\classfile\systemDictionary.cpp, line 212]
+Event: 0.360 Thread 0x0000026908ff0800 Exception <a 'java/lang/ClassNotFoundException': org/apache/log4j/WriterAppenderCustomizer> (0x00000000d6592968) thrown at [C:\jenkins\workspace\8-2-build-windows-amd64-cygwin\jdk8u321\2141\hotspot\src\share\vm\classfile\systemDictionary.cpp, line 212]
+Event: 0.362 Thread 0x0000026908ff0800 Exception <a 'java/lang/ClassNotFoundException': org/apache/log4j/FileAppenderCustomizer> (0x00000000d65a13b0) thrown at [C:\jenkins\workspace\8-2-build-windows-amd64-cygwin\jdk8u321\2141\hotspot\src\share\vm\classfile\systemDictionary.cpp, line 212]
+Event: 0.364 Thread 0x0000026908ff0800 Exception <a 'java/lang/ClassNotFoundException': org/apache/log4j/RollingFileAppenderCustomizer> (0x00000000d65b0348) thrown at [C:\jenkins\workspace\8-2-build-windows-amd64-cygwin\jdk8u321\2141\hotspot\src\share\vm\classfile\systemDictionary.cpp, line 21
+Event: 0.489 Thread 0x0000026908ff0800 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x00000000d68848a8) thrown at [C:\jenkins\workspace\8-2-build-windows-amd64-cygwin\jdk8u321\2141\hotspot\src\share\vm\prims\methodHandles.cpp, line 1169]
+Event: 0.491 Thread 0x0000026908ff0800 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x00000000d6891f98) thrown at [C:\jenkins\workspace\8-2-build-windows-amd64-cygwin\jdk8u321\2141\hotspot\src\share\vm\prims\methodHandles.cpp, line 1169]
+
+Events (10 events):
+Event: 1.071 loading class org/antlr/v4/runtime/atn/LexerCustomAction
+Event: 1.071 loading class org/antlr/v4/runtime/atn/LexerCustomAction done
+Event: 1.071 loading class org/antlr/v4/runtime/atn/LexerChannelAction
+Event: 1.071 loading class org/antlr/v4/runtime/atn/LexerChannelAction done
+Event: 1.072 loading class org/antlr/v4/runtime/dfa/DFA
+Event: 1.072 loading class org/antlr/v4/runtime/dfa/DFA done
+Event: 1.072 loading class org/antlr/v4/runtime/dfa/DFASerializer
+Event: 1.072 loading class org/antlr/v4/runtime/dfa/DFASerializer done
+Event: 1.072 loading class org/antlr/v4/runtime/dfa/LexerDFASerializer
+Event: 1.072 loading class org/antlr/v4/runtime/dfa/LexerDFASerializer done
+
+
+Dynamic libraries:
+0x00007ff765e00000 - 0x00007ff765e47000 	C:\WINDOWS\SYSTEM32\java.exe
+0x00007ffc753f0000 - 0x00007ffc755e5000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffc74150000 - 0x00007ffc7420e000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffc72b10000 - 0x00007ffc72dd8000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffc73890000 - 0x00007ffc7393e000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffc74020000 - 0x00007ffc740be000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffc74ca0000 - 0x00007ffc74d3c000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffc74f20000 - 0x00007ffc75045000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffc73450000 - 0x00007ffc735f0000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffc72de0000 - 0x00007ffc72e02000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffc74c00000 - 0x00007ffc74c2b000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffc72f70000 - 0x00007ffc7307b000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffc73170000 - 0x00007ffc7320d000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffc73210000 - 0x00007ffc73310000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffc5faa0000 - 0x00007ffc5fd3a000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.1110_none_60b5254171f9507e\COMCTL32.dll
+0x00007ffc743e0000 - 0x00007ffc74410000 	C:\WINDOWS\System32\IMM32.DLL
+0x000000005cf60000 - 0x000000005cf6c000 	C:\Program Files (x86)\360\360Safe\safemon\SafeWrapper.dll
+0x00007ffc5c8b0000 - 0x00007ffc5c942000 	C:\Program Files (x86)\360\360Safe\safemon\libzdtp64.dll
+0x00007ffc74410000 - 0x00007ffc74b54000 	C:\WINDOWS\System32\SHELL32.dll
+0x00007ffc73940000 - 0x00007ffc73995000 	C:\WINDOWS\System32\SHLWAPI.dll
+0x00007ffc72690000 - 0x00007ffc7269a000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffc440e0000 - 0x00007ffc440f5000 	C:\Program Files\Java\jre1.8.0_321\bin\vcruntime140.dll
+0x00007ffc372b0000 - 0x00007ffc3734b000 	C:\Program Files\Java\jre1.8.0_321\bin\msvcp140.dll
+0x000000005aaa0000 - 0x000000005b301000 	C:\Program Files\Java\jre1.8.0_321\bin\server\jvm.dll
+0x00007ffc73880000 - 0x00007ffc73888000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ffc60d10000 - 0x00007ffc60d19000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffc5d230000 - 0x00007ffc5d257000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffc74c30000 - 0x00007ffc74c9b000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffc71340000 - 0x00007ffc71352000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ffc652d0000 - 0x00007ffc652e0000 	C:\Program Files\Java\jre1.8.0_321\bin\verify.dll
+0x00007ffc42b40000 - 0x00007ffc42b6b000 	C:\Program Files\Java\jre1.8.0_321\bin\java.dll
+0x00007ffc42f70000 - 0x00007ffc42f88000 	C:\Program Files\Java\jre1.8.0_321\bin\zip.dll
+0x00007ffc706d0000 - 0x00007ffc70e64000 	C:\WINDOWS\SYSTEM32\windows.storage.dll
+0x00007ffc75050000 - 0x00007ffc753a4000 	C:\WINDOWS\System32\combase.dll
+0x00007ffc72500000 - 0x00007ffc7252c000 	C:\WINDOWS\SYSTEM32\Wldp.dll
+0x00007ffc74d40000 - 0x00007ffc74ded000 	C:\WINDOWS\System32\SHCORE.dll
+0x00007ffc72a50000 - 0x00007ffc72a6f000 	C:\WINDOWS\SYSTEM32\profapi.dll
+0x00007ffc43590000 - 0x00007ffc435ac000 	C:\Program Files\Java\jre1.8.0_321\bin\net.dll
+0x00007ffc72260000 - 0x00007ffc722ca000 	C:\WINDOWS\system32\mswsock.dll
+0x00007ffc42920000 - 0x00007ffc42933000 	C:\Program Files\Java\jre1.8.0_321\bin\nio.dll
+0x00007ffc70f30000 - 0x00007ffc71114000 	C:\WINDOWS\SYSTEM32\dbghelp.dll
+0x00007ffc733c0000 - 0x00007ffc73442000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+
+VM Arguments:
+java_command: E:\oss_license_selection_analyze\depends-tool\depends-0.9.6-package\depends-0.9.6\depends.jar -d=E:\oss_license_selection_analyze\temp_files\output_depend python E:\oss_license_selection_analyze\temp_files\zziprar python
+java_class_path (initial): E:\oss_license_selection_analyze\depends-tool\depends-0.9.6-package\depends-0.9.6\depends.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files (x86)\Java
+CLASSPATH=.;C:\Program Files (x86)\Java\jre1.8.0_65\lib
+PATH=E:\pythonProject\venv\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin\;C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqld.exe;C:\TDM-GCC-64;C:\TDM-GCC-64\bin;C:\cygwin64\bin;C:\cygwin64;D:\ninka\ninka-master\bin;C:\Program Files (x86)\Yozosoft\Yozo_Office\Lib\xuggler\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;E:\oss_license_selection_analyze\ninka-tool\ninka-master\bin\;E:\oss_license_selection_analyze\ninka-tool\ninka-master\lib\;C:\Program Files\WinRAR;C:\Strawberry\perl\;C:\Program Files (x86)\Java\jre1.8.0_65\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\bless\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\bless\AppData\Local\Programs\Python\Python36\;C:\Users\bless\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\JetBrains\PyCharm Community Edition 2021.1.1\bin;;C:\Users\bless\AppData\Local\Programs\Microsoft VS Code\bin;E:\pythonProject\venv\lib\site-packages\numpy\.libs
+USERNAME=bless
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10 , 64 bit Build 19041 (10.0.19041.1566)
+
+CPU:total 12 (initial active 12) (6 cores per cpu, 2 threads per core) family 6 model 158 stepping 10, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx
+
+Memory: 4k page, physical 8236352k(424904k free), swap 14527808k(35180k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.321-b07) for windows-amd64 JRE (1.8.0_321-b07), built on Dec 15 2021 11:19:20 by "java_re" with MS VC++ 15.9 (VS2017)
+
+time: Mon Mar 21 14:54:32 2022
+timezone: 中国标准时间
+elapsed time: 1.122327 seconds (0d 0h 0m 1s)
+

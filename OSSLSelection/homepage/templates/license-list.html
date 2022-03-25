@@ -1,0 +1,62 @@
+{% extends 'ossls_base.html' %}
+
+{% block extraCSS %}
+{% endblock %}
+
+{% block title %}
+	开源许可证列表
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+        <!--============左侧栏===============-->
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <div class="left-side-2">
+                <!--开源许可证分类列表-->
+                <div class="main-category">
+                    <h3>开源许可证列表</h3>
+                    <div class="category-list">
+                        <ul id="oss_license_list">
+                            {% for license in oss_license_list %}
+                                <li class="a_license" value="{{license}}"><a><span >{{license}}</span></a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--============右侧栏===============-->
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+            <div class="right-side-2" id="license_info" style="margin:35px 0px 0px 0px;">
+                {{license_info|safe}}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extraJS %}
+    <script>
+        $("#oss_license_list").on("click",".a_license",function(e){
+            license_spdx = $(this).attr("value");
+            console.log(license_spdx);
+            $.ajax({
+				dataType: 'JSON',
+				cache: false,
+				async: true,
+				type: 'POST',
+				url: "{% url 'ossls:license_list_details' %}",
+				data:{license:license_spdx},
+				beforeSend:function(xhr,settings){
+					xhr.setRequestHeader("X-CSRFToken","{{csrf_token}}");
+				},
+				success:function(result){
+					$("#license_info").find("div").remove();
+					$("#license_info").append(result['license_info']);
+				}
+			});
+        });
+
+
+	</script>
+{% endblock %}

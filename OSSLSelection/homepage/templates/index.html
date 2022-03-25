@@ -1,0 +1,273 @@
+{% load static %}
+<!doctype html>
+<html lang="ZXX">
+
+<head>
+	<title>OSSLS--Open Source Software License Selection</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name=description content="">
+	<meta name=author content="Enventer">
+	<link rel="icon" href="/static/img/favicon.png" type="image/png">
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,700,900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/static/css/meanmenu.css">
+	<link rel="stylesheet" href="/static/css/magnific-popup.min.css">
+	<link href="/static/css/aos.min.css" rel="stylesheet">
+	<link href="/static/css/slick.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static/css/style.css">
+	<link rel="stylesheet" href="/static/css/responsive.css">
+</head>
+
+<body>
+	<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
+
+	<!--  Preloader Start========================-->
+	<div id='preloader'>
+		<div id='status'>
+			<img src='/static/img/loading.gif' alt='LOADING....!!!!!' />
+		</div>
+	</div>
+
+	<!--=========== Main Header area ===============-->
+	<header id="home">
+		<div class="main-navigation-1">
+			<div class="container">
+				<div class="row">
+					<!-- logo-area-->
+					<div class="col-xl-2 col-lg-3 col-md-3">
+						<div class="logo-area">
+							<a href="index.html"><img src="/static/img/logo.png" alt="enventer"></a>
+						</div>
+					</div>
+					<!-- mainmenu-area-->
+					<div class="col-xl-10 col-lg-9 col-md-9">
+						<div class="main-menu f-right">
+							<nav id="mobile-menu">
+								<ul>
+									<li><a href="{% url 'ossls:index' %}">首页</a></li>
+									<li>
+										<a href="#" onclick="return false">开源许可证<i class="fas fa-angle-down"></i></a>
+										<ul class="dropdown">
+											<li><a href="{% url 'ossls:about_license' %}">什么是开源许可证</a></li>
+											<li><a href="{% url 'ossls:license_frame' %}">开源许可证框架</a></li>
+											<li><a href="{% url 'ossls:license_list' %}">开源许可证列表</a></li>
+											<li><a href="{% url 'ossls:license_feature' %}">条款特征</a></li>
+											<li><a href="{% url 'ossls:license_fqa' %}">开源许可证FQA</a></li>
+										</ul>
+									</li>
+									<li>
+										<a href="#" onclick="return false">工具<i class="fas fa-angle-down"></i></a>
+										<ul class="dropdown">
+											<li><a href="{% url 'ossls:license_compatibility' %}">开源许可证兼容性判断</a></li>
+											<li><a href="{% url 'ossls:license_selection' %}">开源许可证选择推荐</a></li>
+											<li><a href="{% url 'ossls:license_trend' %}">开源许可证数据展示</a></li>
+										</ul>
+									</li>
+<!--									<li><a href="{% url 'ossls:contact' %}">联系我们</a></li>-->
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- =========内容一：什么是开源许可证？=========== -->
+	<section id="about-license">
+		<!--css中无法显示背景图片,直接在html中加入style属性-->
+		<div class="header-content-area" style="background-image: url({% static 'img/header.png'%});" >
+			<div class="container">
+				<div class="header-pattern-1">
+					<img src="/static/img/header-pattern-1.png" alt="">
+				</div>
+				<div class="header-pattern-2">
+					<img src="/static/img/header-pattern2.png" alt="">
+				</div>
+				<div class="header-animation-area">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12">
+							<div class="intro-text">
+								<h1 data-aos="slide-right" data-aos-anchor-placement="top-bottom" data-aos-delay="700" data-aos-duration="1200">什么是开源许可证？</h1>
+								<p data-aos="fade-in" data-aos-anchor-placement="top-bottom" data-aos-delay="1500" data-aos-duration="1200">
+									开源许可证规范了软件的使用、修改、重新发布、担保和归属, <br>
+									开发者通常会为其项目选择合适的开源许可证以保证自己的知<br>
+									识产权被合理利用.
+									</p>
+								<div class="learnmore" data-aos="fade-in" data-aos-anchor-placement="top-bottom" data-aos-delay="1500" data-aos-duration="1200">
+									<a href="{% url 'ossls:about_license' %}" class="skill-btn">了解更多</a>
+								</div>
+							</div>
+						</div>
+						<!--header artwork-->
+						<div class="header-1-artwork">
+							<div class="layer">
+								<div  data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-delay="400" data-aos-duration="1000">
+									<img src="/static/img/header-1-artwork.png" alt="">
+								</div>
+								<div class="layer-2" data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-delay="800" data-aos-duration="1000">
+									<img src="/static/img/man-in-board.png" alt="">
+								</div>
+								<div class="layer-1" data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-delay="800" data-aos-duration="1000">
+									<img src="/static/img/man-in-pc.png" alt="">
+								</div>
+								<div class="layer-3">
+									<img src="/static/img/spin.png" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- =========内容二：开源许可证列表=========== -->
+	<section id="license-list">
+		<div class="home-about-area">
+			<div class="container">
+				<div class="row">
+					<!--about image-->
+					<div class="col-xl-6 col-lg-6 col-md-6">
+						<div class="home-about-image">
+							<img src="/static/img/home-about.jpg" alt="">
+						</div>
+					</div>
+					<!--about text-->
+					<div class="col-xl-6 col-lg-6 col-md-6">
+						<div class="section-heading-1 home-about-text">
+							<h4>开源许可证条款特征</h4>
+<!--							<h3>开源许可证原文</h3>-->
+							<p>您可以查看25个常用开源许可的详细信息，包括许可证基本信息、文本、权利义务、兼容性特征等。 </p>
+							<div class="section-button">
+								<a href="{% url 'ossls:license_list' %}">了解更多</a>
+							</div>
+							<div class="e-pattern">
+								<img src="/static/img/expertise/e-pattern.png" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- =========内容三:开源许可证兼容性判断工具、开源许可证选择工具、开源许可证常见问题问答机器人=========== -->
+	<section id="our-servers">
+		<div class="services-area">
+			<svg id="curve" data-name="layer 1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1416.99 174.01">
+				<path class="cls-1" d="M0,280.8S283.66,59,608.94,163.56s437.93,150.57,808,10.34V309.54H0V280.8Z" transform="translate(0 -135.53)" />
+			</svg>
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-6 col-lg-6 col-md-5 d-flex align-items-center">
+						<!--services heading text-->
+						<div class="section-heading-2 section-heading-2-p">
+							<h4>开源许可证工具</h4>
+							<h3>我们提供的服务</h3>
+							<p>您可以使用这些服务来确定两个开源许可证之间的兼容性，或提供您的项目包和需求，交互式为您推荐开源许可证。</p>
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-6 col-md-7">
+						<div class="row">
+							<!--service box-->
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-flex align-items-center">
+								<a href="{% url 'ossls:license_compatibility' %}">
+									<div class="single-service"  data-aos="fadein" data-aos-anchor-placement="top-bottom" data-aos-delay="100" data-aos-duration="1000">
+										<div class="service-icon">
+											<img src="/static/img/service/1.png" alt="">
+										</div>
+										<div class="service-text">
+											<h3>开源许可证兼容性判断</h3>
+											<p>如果你想把你的代码组合到另一个许可证下的开源软件中，该工具将帮助您确定代码可以组合。</p>
+										</div>
+										<div class="servive-p-1">
+											<img src="/static/img/service/service-p-1.png" alt="">
+										</div>
+									</div>
+								</a>
+							</div>
+							<!--service box-->
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 margin-top-sb-30">
+								<div class="row">
+									<!--service box-->
+									<div class="col-xl-12" >
+										<a href="{% url 'ossls:license_trend' %}">
+											<div class="single-service" >
+												<div class="service-icon" >
+													<img src="/static/img/service/3.png" alt="">
+												</div>
+												<div class="service-text" >
+													<h3>趋势数据一览</h3>
+													<p>通过几个维度的数据表示，可以了解当前开源平台上开源软件许可的使用现状，并帮助您更好地决策。</p>
+												</div>
+											</div>
+										</a>
+									</div>
+									<!--service box-->
+									<div class="col-xl-12" >
+										<a href="{% url 'ossls:license_selection' %}">
+											<div class="single-service service-mt-30" data-aos="fadein" data-aos-anchor-placement="top-bottom" data-aos-delay="300" data-aos-duration="1000">
+												<div class="service-icon" >
+													<img src="/static/img/service/2.png" alt="">
+												</div>
+												<div class="service-text">
+													<h3>开源许可证选择推荐</h3>
+													<p>如果您打算开源一个项目，但不确定使用哪一个开源许可证，您可以输入您的需求，该工具为您推荐适当的可选开源软件许可证。</p>
+												</div>
+												<div class="servive-p-2">
+													<img src="/static/img/service/service-p-3.png" alt="">
+												</div>
+											</div>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+	<!-- =========Footer Area=========== -->
+			<!--copyright-->
+		<footer>
+			<p>All rights reserved @ blesswoo 2021</p>
+		</footer>
+	</section>
+	<!-- Jquery JS -->
+	<script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
+	<!-- Proper JS -->
+	<script src="/static/js/popper.min.js"></script>
+	<!-- Bootstrap Js -->
+	<script src="/static/js/bootstrap.min.js"></script>
+	<!-- Video popup Js -->
+	<script src="/static/js/magnific-popup.min.js"></script>
+	<!-- Waypoint Up Js -->
+	<script src="/static/js/waypoints.min.js"></script>
+	<!-- Counter Up Js -->
+	<script src="/static/js/counterup.min.js"></script>
+	<!-- Meanmenu Js -->
+	<script src="/static/js/meanmenu.min.js"></script>
+	<!-- Animation Js -->
+	<script src="/static/js/aos.min.js"></script>
+	<!-- Filtering Js -->
+	<script src="/static/js/isotope.min.js"></script>
+	<!-- Background Move Js -->
+	<script src="/static/js/jquery.backgroundMove.js"></script>
+	<!-- Slick Carousel Js -->
+	<script src="/static/js/slick.min.js"></script>
+	<!-- ScrollUp Js -->
+	<script src="/static/js/scrollUp.js"></script>
+	<!-- Main Js -->
+	<script src="/static/js/main.js"></script>
+</body>
+
+</html>
