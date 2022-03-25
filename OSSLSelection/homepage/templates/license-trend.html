@@ -1,0 +1,470 @@
+{% extends 'ossls_base.html' %}
+
+{% block extraCSS %}
+	<link rel="stylesheet" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+    <link href="/static/css/foundation.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/foundation-datepicker.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/static/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="/static/css/default.css">
+{% endblock %}
+
+{% block title %}
+	开源许可证的使用情况
+{% endblock %}
+
+{% block body %}
+	<div class="row" style="height:700px">
+		<!--条件筛选-->
+		<div class="mainbox">
+			<div class="chose">
+				<div class="box">
+					<span>数据来源</span>
+					<ul class="ul0" id="repo_source">
+						<li class="act" value="github">GitHub</li>
+						<li value="libraries_io">Libraries.io</li>
+					</ul>
+				</div>
+				<div class="box">
+					<span>项目主题</span>
+					<ul class="ul1" id="repo_topics">
+						<li class="act" value="all">全部</li>
+						{% for topic in github_topics %}
+							<li value="{{topic}}">{{topic}}</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="box">
+					<span>编程语言</span>
+					<ul class="ul2" id="repo_language">
+						<li class="act" value="all">全部</li>
+						{% for language in github_languages %}
+							<li value="{{language}}">{{language}}</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="box">
+					<span>开源许可证</span>
+					<ul class="ul3" id="repo_license">
+						<li class="act" value="all">全部</li>
+						{% for license in github_licenses %}
+							<li value="{{license}}">{{license}}</li>
+						{% endfor %}
+					</ul>
+				</div>
+
+				<div class="box">
+					<span>stars范围</span>
+					<div class="fanwei">
+						<div class="left">
+							<input type=""  id="minstar" placeholder="最小"/>
+						</div>                      -
+						<div class="rig">
+							<input type=""  id="maxstar" placeholder="最大"/>
+						</div>
+					</div>
+					<div class="buttons" >
+						<button id="data_submit">查询</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 数据展示 -->
+		<div id="wrapper">
+			<div id="left-side">
+				<ul>
+					<li class="l_trend active">趋势</li>
+					<li class="l_distribution">分布</li>
+				</ul>
+  			</div>
+
+			<div id="border"><div id="line" class="one"></div></div>
+
+			<div id="right-side">
+				<!--趋势-->
+				<div id="first" class="active">
+					<div id="draw_trend" style="width: 100%;height: 500px;"></div>
+				</div>
+				<!--分布-->
+				<div id="second">
+	  				<div id="draw_distribution" style="width: 100%;height: 500px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block extraJS %}
+	<script src="/static/js/foundation-datepicker.min.js"></script>
+    <script src="/static/js/locales/foundation-datepicker.zh-CN.js"></script>
+<!--	<script src="https://cdn.jsdelivr.net/npm/echarts@5.0.0-alpha.1/dist/echarts.min.js"></script>-->
+<!--	<script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>-->
+	<script src="https://cdn.bootcdn.net/ajax/libs/echarts/4.2.1/echarts.js"></script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		$(".ul0 li").click(function() {
+                $(this).siblings('li').removeClass('act');
+                $(this).addClass('act');
+            });
+
+            $(".ul1 li").click(function() {
+            	if($(this).hasClass("act")){
+                 	$(this).removeClass('act');
+                }
+                else{
+                	if($(".ul1 li:first").hasClass("act")){
+                    	$(".ul1 li:first").removeClass('act');
+                	}
+                    $(this).addClass('act');
+            	}
+            });
+            $(".ul1 li:first").click(function() {
+                if($(this).hasClass("act")){
+                    $(this).siblings('li').removeClass('act');
+                }
+                else{
+                    $(this).siblings('li').removeClass('act');
+                    $(this).addClass('act');
+                }
+            });
+
+            $(".ul2 li").click(function() {
+            	if($(this).hasClass("act")){
+                 	$(this).removeClass('act');
+                }
+                else{
+                	if($(".ul2 li:first").hasClass("act")){
+                    	$(".ul2 li:first").removeClass('act');
+                	}
+                    $(this).addClass('act');
+            	}
+            });
+            $(".ul2 li:first").click(function() {
+                if($(this).hasClass("act")){
+                    $(this).siblings('li').removeClass('act');
+                }
+                else{
+                    $(this).siblings('li').removeClass('act');
+                    $(this).addClass('act');
+                }
+            });
+
+            $(".ul3 li").click(function() {
+            	if($(this).hasClass("act")){
+                 	$(this).removeClass('act');
+                }
+                else{
+                	if($(".ul3 li:first").hasClass("act")) {
+                    	$(".ul3 li:first").removeClass('act');
+
+                	}
+                    $(this).addClass('act');
+            	}
+            });
+            $(".ul3 li:first").click(function() {
+                if($(this).hasClass("act")){
+                    $(this).siblings('li').removeClass('act');
+                }
+                else{
+                    $(this).siblings('li').removeClass('act');
+                    $(this).addClass('act');
+
+                }
+            });
+        });
+
+		<!--查询数据展示按钮-->
+		$("#data_submit").click(function(e){
+			var selected_data_source = 'github';
+			var selected_topics = [];
+			var selected_languages = [];
+			var selected_licenses = [];
+			var len = $(".ul0 li").length;
+            for (var i = 0; i < len; i++) {
+            	$('.ul0').each(function() {
+                 	var classlen = $(this).find('li').eq(i).attr('class');
+                	if (classlen == "act") {
+                    	elected_data_source = $(this).find('li').eq(i).attr('value');
+                    }
+                })
+            }
+            var len = $(".ul1 li").length;
+            for (var i = 0; i < len; i++) {
+            	$('.ul1').each(function() {
+                 	var classlen = $(this).find('li').eq(i).attr('class');
+                	if (classlen == "act") {
+                    	selected_topics.push($(this).find('li').eq(i).attr('value'));
+                    }
+                })
+            }
+            var len = $(".ul2 li").length;
+            for (var i = 0; i < len; i++) {
+            	$('.ul2').each(function() {
+                 	var classlen = $(this).find('li').eq(i).attr('class');
+                	if (classlen == "act") {
+                    	selected_languages.push($(this).find('li').eq(i).attr('value'));
+                    }
+                })
+            }
+            var len = $(".ul3 li").length;
+            for (var i = 0; i < len; i++) {
+            	$('.ul3').each(function() {
+                 	var classlen = $(this).find('li').eq(i).attr('class');
+                	if (classlen == "act") {
+                    	selected_licenses.push($(this).find('li').eq(i).attr('value'));
+                    }
+                })
+            }
+            var minstar = $('#minstar').val();
+            var maxstar = $('#maxstar').val();
+			$.ajax({
+					dataType: 'JSON',
+					cache: false,
+					async: true,
+					type: 'POST',
+					url:"{% url 'ossls:draw_trend' %}",
+					traditional:true,
+					data:{
+						selected_data_source:selected_data_source,
+						selected_topics:selected_topics,
+						selected_languages:selected_languages,
+						selected_licenses:selected_licenses,
+						minstar:minstar,
+						maxstar:maxstar,
+					},
+					beforeSend:function(xhr,settings){
+						xhr.setRequestHeader("X-CSRFToken","{{csrf_token}}");
+					},
+					success:function(result){
+						<!--	  画趋势图			-->
+						var datalist = [];
+						for(var i = 0; i < result['datalist'].length; i++){
+							var one_data = {
+								name:result['datalist'][i]['name'],
+								data:result['datalist'][i]['data']
+								};
+							datalist.push(one_data);
+						}
+
+						var dom = document.getElementById("draw_trend");
+						var myChart = echarts.init(dom);
+						var date = result['datelist'];//逐月
+						var option = {
+							title:{
+								show:true,
+								text:'license逐年采用趋势',
+								y:'top',
+								x:'left',
+							},
+							tooltip: {
+								trigger: 'axis',
+								axisPointer: {
+									type: 'line'
+								},
+								formatter: (data) => {
+									data.sort((a,b) => {return b.data - a.data});
+									let html=`${data[0].name}</br>`;
+									data.forEach(item => {
+										if(item.seriesName.indexOf("-1")>-1){
+										}
+										else{
+											html+=`${item.marker}${item.seriesName}:${item.data}</br>`;
+										}
+									});
+									return html;
+								}
+							},
+							legend: {
+								type:'scroll',
+								itemGap:8,
+								itemHeight: 2,
+								itemWidth:10,
+								top:'6%',
+								left:'10%',
+								right:'15%',
+								formatter: function (name) {
+									return  name;
+								},
+								data: getLegendData(datalist),
+							},
+							grid: {
+								top:'20%',
+								left: '3%',
+								right: '3%',
+								bottom: '6%',
+								containLabel: true
+							},
+							xAxis: {
+								nameLocation: 'center',
+								type: 'category',
+								boundaryGap: true,
+								data:date,
+								show: false,
+								axisTick: {
+									show: true
+								},
+							},
+							yAxis: [{
+								type: 'value',
+								axisLabel: {
+									formatter: '{value}',
+								},
+								axisLine: {       //y轴
+									show: false
+								},
+								axisTick: {       //y轴刻度线
+									show: false
+								},
+							},],
+							dataZoom: [
+								{//图标下方的拖动条
+									type: 'inside',
+									start: 50,
+									end: 100
+								},
+								{
+									start: 50,
+									end: 100,
+									handleSize: '80%',
+									handleStyle: {
+										color: '#fff',
+										shadowBlur: 3,
+										shadowColor: 'rgba(0, 0, 0, 0.6)',
+										shadowOffsetX: 2,
+										shadowOffsetY: 2
+								}
+							}],
+							series:getSeriesList()
+						}
+
+						myChart.setOption(option,true);
+
+						/** 根据数据创建图例 **/
+						function getLegendData(params) {
+							let obj={};
+							let objlist=[];
+							params.forEach(item => {
+								obj={
+									name:item.name,
+									icon:'bar'
+								};
+								objlist.push(obj);
+							});
+							return objlist;
+						}
+
+						/** 根据数据初始化折线和背景数据 **/
+						function getSeriesList() {
+							let list=[...getSeries(datalist),...getSeriesByMarkArea(datalist)];
+							return list;
+						}
+
+						/** 根据数据初始化折线数据 **/
+						function getSeries(params) {
+							let obj={};
+							let objlist=[];
+							params.forEach(item => {
+								obj={
+									showSymbol:false,
+									name:item.name,
+									type: 'line',
+									data:item.data,
+								};
+								objlist.push(obj);
+							});
+							return objlist;
+						}
+
+						/** 根据数据初始化背景数据 **/
+						function getSeriesByMarkArea(params) {
+							let obj={};
+							let objlist=[];
+							for(var i = 0;i<params.length;i++){
+								let item=params[i];
+								obj={
+									symbolSize: 0, // symbol的大小设置为0让线的小圆点不显示
+									showSymbol: false, // 不显示symbol不显示
+									lineStyle: {
+										width: 0, // 线宽是0不显示线
+										color: 'rgba(0, 0, 0, 0)' // 线的颜色是透明的
+									},
+									name:item.name+'-1',
+									type: 'line',
+									data:item.data,
+								};
+								objlist.push(obj);
+							};
+							return objlist;
+						}
+
+						<!--	  画分布图		-->
+						var datalist2 = [];
+						for (var i = 0; i < result['distribut_dict'].length; i++){
+							var one_data = {
+								value: result['distribut_dict'][i][1],
+								name: result['distribut_dict'][i][0],
+							}
+							datalist2.push(one_data);
+						}
+						var dom2 = document.getElementById("draw_distribution");
+						var myChart2 = echarts.init(dom2);
+						option2 = {
+							title:{
+								show:true,
+								text:'license总体分布图',
+								y:'top',
+								x:'left',
+							},
+							tooltip:{
+								trigger:'item',
+							},
+							legend: {
+								type:'scroll',
+								orient: 'vertical',
+								left: 10,
+								top: 'center'
+							},
+							series: [
+								{
+    								data: datalist2,
+    								type: 'pie',
+    								roseType:'area',
+    								showBackground: true,
+    								backgroundStyle: {
+    									color: 'rgba(220, 220, 220, 0.8)'
+    								}
+								}
+							]
+						};
+						myChart2.setOption(option2,true);
+					},
+					error:function(){
+						alert("服务端连接失败，请刷新重试");
+					},
+			});
+		});
+
+		$('.l_trend').click(function () {
+			$('.l_trend').addClass('active');
+			$('.l_trend > .icon').addClass('active');
+			$('.l_distribution').removeClass('active');
+			$('.l_distribution > .icon').removeClass('active');
+			$('#line').addClass('one');
+			$('#line').removeClass('two');
+			$('#first').addClass('active');
+			$('#second').removeClass('active');
+		});
+		$('.l_distribution').click(function () {
+			$('.l_distribution').addClass('active');
+			$('.l_distribution > .icon').addClass('active');
+			$('.l_trend').removeClass('active');
+			$('.l_trend > .icon').removeClass('active');
+			$('#line').addClass('two');
+			$('#line').removeClass('one');
+			$('#first').removeClass('active');
+			$('#second').addClass('active');
+		});
+
+    </script>
+{% endblock %}

@@ -1,0 +1,62 @@
+id,开源企业,核心开源项目,项目类型,开源项目来源,商业模式,许可模式,开源许可类型
+1,Acquia,Drupal,Web内容管理系统,内部,开放核心,GPL-2.0+商业许可,限制型
+2,Alfresco,Alfresco,企业内容管理（ECM）和业务流程管理（BPM）,内部,开放核心,LGPL-3.0+商业许可,限制型
+3,Artifex,Ghostscript,PostScript语言和PDF文件的解释器,内部,双重授权,AGPL-3.0、商业许可,限制型
+4,Automattic,WordPress,内容管理系统,外部,开放核心,GPL-2.0+商业许可,限制型
+5,Canonical,Ubuntu,操作系统（Linux）,内部,支持服务,GPL-2.0,限制型
+6,Chef,chef,配置管理工具,内部,开放核心,Apache-2.0+商业许可,宽松型
+7,Cloudbess,Jenkins,开发者工具/CI,外部,开放核心,MIT+商业许可,宽松型
+8,Cloudera,Hadoop,大数据/Hadoop生态系统,外部,开放核心,Apache-2.0+商业许可,宽松型
+9,cockroach labs,CockroachDB大部分核心,分布式数据库,内部,业务源,BSL1.1、Apache-2.0,宽松型
+10,cockroach labs,CockroachDB部分核心,分布式数据库,内部,开放核心+混合许可,CCL (free)+ CCL (paid),自定义
+11,confluent,Kafka,大数据/中间件/数据流,外部,开放核心,Apache-2.0+商业许可,宽松型
+12,Couchbase,Couchbase,NoSQL数据库,内部,开放核心,Apache-2.0+商业许可,宽松型
+13,Databricks,Spark,云平台,外部,SAAS,Apache-2.0,宽松型
+14,Datastax,Cassandra,NoSQL数据库,外部,开放核心,Apache-2.0+商业许可,宽松型
+15,Docker,Docker,开发者/运维/基础设施工具,内部,开放核心,Apache 2.0+商业许可,宽松型
+16,Elastic,Elasticsearch,分布式搜索引擎+工具,内部,开放核心+混合许可,SSPL + Elastic,自定义
+17,Enterprise DB,postgresql,数据库,外部,开放核心,PostgreSQL+商业许可,宽松型
+18,Fastly,Varnish,CDN,外部,开放核心,BSD-2-Clause+商业许可,宽松型
+19,ForgeRock,OpenAM/IDM/DJ/IG,身份及访问管理,内部,开放核心,CDDL-1.1+商业许可,限制型
+20,GitHub(Microsoft收购),Git,分布式源代码版本控制,外部,SAAS,GPL-2.0,限制型
+21,GitLab,Git,分布式源代码版本控制,外部,SAAS,GPL-2.0,限制型
+22,HashiCorp,Vagrant等,开发/操作/基础设施工具,内部,开放核心,MPL-2.0+商业许可,限制型
+23,Hortonworks(与Cloudera合并),Hadoop,大数据/Hadoop生态系统,外部,支持服务,Apache 2.0,宽松型
+24,Instructure,Canvas,图形库,内部,开放核心,AGPL-3.0+商业许可,限制型
+25,JetBrains,IntelliJ,开发者工具,内部,开放核心,Apache-2.0+商业许可,宽松型
+26,Jfrog,Artifactory,软件工件仓库,内部,开放核心,Apache-2.0+商业许可,宽松型
+27,Kaltura,Kalyura,视频编辑平台,内部,开放核心,AGPL-3.0+商业许可,限制型
+28,Liferay,Liferay Portal,企业门户网站,内部,开放核心,LGPL-2.1++商业许可,限制型
+29,Linden Lab,libsecondlife,虚拟游戏,内部,开放核心,BSD-3-Clause+商业许可,宽松型
+30,Magento(Adobe收购),Magento,Web内容管理系统,内部,开放核心,OSL3.0+商业许可,限制型
+31,Mapbox,Mapbox GL JS,地图软件,内部,开放核心,BSD-3-Clause+商业许可,宽松型
+32,MapR(HPE收购),Hadoop,大数据/Hadoop生态系统,外部,开放核心,Apache-2.0+商业许可,宽松型
+33,MariaDB Corporation,MariaDB Server,数据库管理系统,内部,支持服务,GPL-2.0+,限制型
+34,MariaDB Corporation,MaxScale、MariaDB ColumnStore,数据库智能代理服务,内部,业务源,BSL1.1[7]、GPL-2.0+,限制型
+35,Mirantis,OpenStack,基础设施软件,外部,支持服务,Apache-2.0,宽松型
+36,MongoDB,MongoDB,NoSQL数据库,内部,开放核心,SSPL+商业许可,自定义
+37,Mozilla Corporation,Firefox,Web浏览器,内部,版税/广告,MPL-2.0,限制型
+38,MuleSoft(Salesforce收购),MuleESB,中间件,内部,开放核心,CPAL-1.0+商业许可,限制型
+39,MySQL AB(Oracle收购),MySQL,关系型数据库管理系统,内部,开放核心,GPL-2.0+商业许可,限制型
+40,Neo4j,neo4j 3.5,图数据库,内部,开放核心,GPL-3.0+商业许可,限制型
+41,Nicira(VMware收购),Open vSwitch,SDN/网络虚拟化,外部,开放核心,Apache-2.0+商业许可,宽松型
+42,Odoo,Odoo,商业应用,内部,开放核心,LGPL-3.0+商业许可,限制型
+43,Pentaho(Hitachi Vantara收购),pentaho,商业智能/提取转换加载（BI/ETL）,内部,开放核心,Apache-2.0+商业许可,宽松型
+44,PingCAP,TiDB,分布式关系数据库,内部,开放核心,Apache-2.0+商业许可,宽松型
+45,Pivotal(Vmware 收购),CloudFoundry,云平台,内部,SAAS,Apache-2.0,宽松型
+46,Postman,Postman Runtime,API管理,内部,开放核心,Apache-2.0+商业许可,宽松型
+47,Puppet Labs,Puppet,IT基础设施自动化管理工具,内部,开放核心,Apache-2.0+商业许可,宽松型
+48,Rackspace,OpenStack,云平台,外部,SAAS,Apache-2.0,宽松型
+49,Rapid7,Metasploit,安全,内部,开放核心,BSD-3-Clause+商业许可,宽松型
+50,RedHat(IBM收购),Linux,操作系统,外部,支持服务,GPL-2.0,限制型
+51,Redis Labs,Redis,数据库,内部,开放核心,BSD-3-Clause+商业许可,宽松型
+52,Redis Labs,RediSearch,搜索引擎,内部,附加限制条款,Apache 2.0 with Commons Clause1.0,自定义
+53,Segment(Twilio收购),Analytics.js,客户分析,内部,开放核心,MIT+商业许可,宽松型
+54,Sleepycat(Oracle收购),BerkeleyDB,嵌入式数据库系统,内部,双重授权,AGPL-3.0、商业许可,限制型
+55,Sourcefire(Cisco收购),Snort,网络入侵检测,内部,开放核心,GPL-2.0+商业许可,限制型
+56,SugarCRM,SugarCRM,CRM客户关系管理,内部,开放核心,AGPL-3.0+商业许可,限制型
+57,SUSE,Linux kernel,操作系统（Linux）,外部,支持服务,GPL-2.0+,限制型
+58,Talend,Talend Data Integration,SOA/ETL/AI/中间件,内部,开放核心,Apache-2.0+商业许可,宽松型
+59,Treasure Data(Arm收购),Fluentd,Log数据平台,内部,开放核心,Apache-2.0+商业许可,宽松型
+60,VA Linux(Geeknet收购),Linux,操作系统,外部,支持服务,GPL-2.0,限制型
+61,WP Engine,WordPress,内容管理系统,外部,开放核心,GPL-2.0+商业许可,限制型

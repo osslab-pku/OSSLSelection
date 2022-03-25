@@ -1,0 +1,78 @@
+{% extends 'ossls_base.html' %}
+
+{% block title %}
+	联系我们
+{% endblock %}
+
+{% block body %}
+	<div class="single-contact-area">
+		<div class="row">
+			<!--single contact-->
+			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+				<div class="single-contact-info">
+					<div class="info-icon">
+						<i class="far fa-envelope"></i>
+					</div>
+					<div class="info-content">
+						<h6>邮箱地址</h6>
+						<span>blesswoo@pku.edu.cn</span>
+					</div>
+				</div>
+			</div>
+			<!--single contact-->
+			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 margin-top-sb-30">
+				<div class="single-contact-info">
+					<div class="info-icon">
+						<i class="fas fa-mobile-alt"></i>
+					</div>
+					<div class="info-content">
+						<h6>联系电话</h6>
+						<span>+9090950</span>
+					</div>
+				</div>
+			</div>
+			<!--single contact-->
+			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 margin-top-sb-30">
+				<div class="single-contact-info large-mb-d">
+					<div class="info-icon">
+						<i class="fas fa-map-marker-alt"></i>
+					</div>
+					<div class="info-content">
+						<h6>联系地址</h6>
+						<span>北京市海淀区颐和园路5号</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--contact form area-->
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="contact-form-area">
+				<!--contact left bg-->
+				<div class="contact-left-bg">
+					<img src="/static/img/contact-p-2.png" alt="">
+				</div>
+				<div class="contact-form-heading">
+					<h3>给我们留言</h3>
+				</div>
+				<div class="contact-form">
+					<form action="#">
+						<input type="text" placeholder="姓">
+						<input class="margin-top-lb-30 margin-top-sb-30" type="text" placeholder="名">
+						<input type="email" placeholder="您的邮箱地址">
+						<textarea placeholder="请输入信息"></textarea>
+						<div class="send-btn">
+							<input type="submit" value="发  送" id="formsend">
+						</div>
+					</form>
+				</div>
+				<!--contact right bg-->
+				<div class="contact-right-bg">
+					<img src="/static/img/contact-p-1.png" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
