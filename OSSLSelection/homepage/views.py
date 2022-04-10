@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
-from .models import LicenseList,FQAList,LicenseTerms,BusinessModel
+from .models import LicenseTerms,BusinessModel
 from django.views.decorators.http import require_POST,require_GET
 from django.http import HttpResponseBadRequest,JsonResponse
 from django.forms.models import model_to_dict
@@ -24,171 +24,142 @@ def index(request):
                   'homepage/templates/index.html',
                   )
 
-# 2、开源许可证介绍页
-def about_license(request):
-    return render(request,
-                  'homepage/templates/about-license.html',
-                  )
-
-# 3、许可证条款特征页
-def license_feature(request):
-    licenses_terms = LicenseTerms.objects.all()
-    df = pd.read_excel('E:\\OSSLSelection\\OSSLSelection\\homepage\\compatibility.xls', index_col=0)
-    oss_license_list = df.index.tolist()
-    oss_license_list.remove('AGPL-3.0+')
-    oss_license_list.remove('GPL-2.0+')
-    oss_license_list.remove('GPL-3.0+')
-    oss_license_list.remove('LGPL-2.1+')
-    oss_license_list.remove('LGPL-3.0+')
-    return render(request,
-                  'homepage/templates/license-feature.html',
-                  {
-                   'licenses_terms':licenses_terms,
-                   'oss_license_list': oss_license_list,
-                   }
-                  )
-
-# 4、许可证列表页
-def license_list(request):
-    df = pd.read_excel('E:\\OSSLSelection\\OSSLSelection\\homepage\\compatibility.xls', index_col=0)
-    oss_license_list = df.index.tolist()
-    f = open('E:\\OSSLSelection\\OSSLSelection\\homepage\\static\\doc\\license\\Apache-2.0.txt',encoding='utf-8-sig')
-    license_info = f.read()
-    f.close()
-    return render(request,
-                  'homepage/templates/license-list.html',
-                  {'oss_license_list':oss_license_list,
-                   'license_info':license_info,
-                   }
-                  )
-
-# 4、许可证列表页___许可证详情
-def license_list_details(request):
-    licensespdx = request.POST.get('license')
-    # print('+++++'+licensespdx)
-    f = open('E:\\OSSLSelection\\OSSLSelection\\homepage\\static\\doc\\license\\'+licensespdx+'.txt',encoding='utf-8-sig')
-    license_info = f.read()
-    # license_detail = LicenseList.objects.filter(spdx=licensespdx)
-    # license_info = license_detail['license_info']
-    return JsonResponse({"license_info": license_info,
-                        })
-
-
-# 5、许可证兼容性判断工具页
+# 2、许可证兼容性判断工具页
 def license_compatibility(request):
-    all_licenses = list(LicenseList.objects.values_list('spdx', flat=True).order_by('spdx'))
-    df = pd.read_excel('E:\\OSSLSelection\\OSSLSelection\\homepage\\compatibility.xls', index_col=0)
+    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\compatibility_58.csv', index_col=0)
     judge_licenses = df.index.tolist()
     return render(request,
                   'homepage/templates/license-compatibility.html',
-                  {
-                      'licenses':judge_licenses,
-                  },
-                  )
+                  {'licenses':judge_licenses,},)
 
-# 5、许可证兼容性判断工具页___许可证兼容性判断
+# 2、许可证兼容性判断工具页___许可证兼容性判断结果
 def license_compatibility_judge(request):
     licenseA = request.POST.get('licenseA')
     licenseB = request.POST.get('licenseB')
     compatibility_result = compatibility_judge(licenseA,licenseB)
-    iscompatibility = " "
+    iscompatibility = ""
+    how_to_use = ""
+    why_or_why_not = ""
+    compatibility_terms = []
     if licenseA == licenseB:
         iscompatibility = licenseA + "兼容" + licenseB + "。"
+        why_or_why_not = "您选择了两个相同的许可证。"
     else:
         if compatibility_result == '0':
-            iscompatibility = licenseA + "不兼容" + licenseB + "。" + license_uncompatibility_reason(licenseA, licenseB)
+            iscompatibility = licenseA + "不兼容" + licenseB + "。"
+            how_to_use = "您不能在" + licenseB + "授权的作品中使用（包括但不限于链接、复制粘贴等方式）" + licenseA + "授权的作品。"
+            why_or_why_not = ""
+            why_or_why_not,compatibility_terms = license_uncompatibility1_reason(licenseA, licenseB)
+            why_or_why_not = "(1)" + why_or_why_not + "(2)" +license_uncompatibility2_reason(licenseA, licenseB)
         elif compatibility_result == '1':
-            iscompatibility = licenseA + "兼容" + licenseB + "。" + licenseA + "授权的作品经过修改，所产生的衍生作品可以使用" + licenseB + "重新授权。" + "然而，" + licenseA + "不能组合兼容" + licenseB + "，因为" + licenseB + "的copyleft属性将传染" + licenseA + "授权的代码。"
+            iscompatibility = licenseA + "次级兼容" + licenseB + "。"
+            how_to_use = "您可以修改或使用（包括但不限于链接、复制粘贴等方式）" + licenseA + "授权的作品，所产生的衍生作品可以采用" + licenseB + "授权，" \
+                         + "衍生作品的整体及其部分（包括原" + licenseA + "授权的部分）都将受" + licenseB + "的约束，请注意许可证信息的变更管理。"
+            why_or_why_not = license_uncompatibility2_reason(licenseA, licenseB)
         elif compatibility_result == '2':
-            iscompatibility = licenseA + "兼容" + licenseB + "。" + licenseB + "是" + licenseA + "的后续版本，（初始开发者指定或默认情况下）" + licenseA + "授权的作品经过修改，所产生的衍生作品可以使用" + licenseB + "重新授权。"
-        elif compatibility_result == '3':
-            iscompatibility = licenseA + "组合兼容" + licenseB + "。" + licenseA + "授权的作品可以与" + licenseB + "授权的作品进行组合，且组合作品的整体使用" + licenseB + "授权。" + "然而，" + licenseA + "授权的作品经过修改，所产生的衍生作品不能使用" + licenseB + "重新授权，因为" + license_uncompatibility_reason(
-                licenseA, licenseB)
-        elif compatibility_result == '4':
-            iscompatibility = licenseA + "兼容" + licenseB + "。" + licenseA + "的兼容许可证列表包含" + licenseB + "，" + licenseA + "授权的作品经过修改，所产生的衍生作品可以使用" + licenseB + "重新授权。"
-        elif compatibility_result == '4+':
-            iscompatibility = licenseA + "不兼容" + licenseB + "。" + license_uncompatibility_reason(licenseA,
-                                                                                                 licenseB) + "但是，" + licenseA + "授权的作品可以通过多次重新授权的方式（A兼容C，C兼容B），变更为" + licenseB + "授权。"
-        elif compatibility_result == '1、3':
-            iscompatibility = licenseA + "兼容且组合兼容" + licenseB + "。" + licenseA + "授权的作品经过修改，所产生的衍生作品可以使用" + licenseB + "重新授权；且" + licenseA + "授权的作品可以与" + licenseB + "授权的作品进行组合，组合作品的整体使用" + licenseB + "授权。"
-        elif compatibility_result == '3、4':
-            iscompatibility = licenseA + "兼容且组合兼容" + licenseB + "。" + licenseA + "的兼容许可证列表包含" + licenseB + "，即" + licenseA + "授权的作品经过修改，所产生的衍生作品可以使用" + licenseB + "重新授权；且" + licenseA + "授权的作品可以与" + licenseB + "授权的作品进行组合，组合作品的整体使用" + licenseB + "授权。"
-        elif compatibility_result == '3、4+':
-            iscompatibility = licenseA + "组合兼容" + licenseB + "。" + licenseA + "授权的作品可以与" + licenseB + "授权的作品进行组合，组合作品的整体使用" + licenseB + "授权。" + licenseA + "授权的作品经过修改，不能直接使用" + licenseB + "重新授权，因为" + license_uncompatibility_reason(
-                licenseA, licenseB) + "；但可以通过多次重新授权的方式（A兼容C，C兼容B），使得" + licenseA + "授权的作品可以变更为" + licenseB + "授权。"
+            iscompatibility = licenseA + "组合兼容" + licenseB + "。"
+            how_to_use = "您可以修改或使用（包括但不限于链接、复制粘贴等方式）" + licenseA + "授权的作品，所产生的衍生作品的整体可以采用" + licenseB + "授权，" \
+                         + "但须确保该衍生作品中原" + licenseA + "授权的部分及其修改仍然受" + licenseA + "的约束（不进行许可证变更），而" + licenseB + "约束除" + licenseA + "授权部分的其他部分。"
+            why_or_why_not,compatibility_terms =  license_uncompatibility1_reason(licenseA, licenseB)
+        elif compatibility_result == '1,2':
+            iscompatibility = licenseA + "次级兼容且组合兼容" + licenseB + "。"
+            how_to_use = "您可以任选一种兼容性场景进行许可证管理。（1）若您选择次级兼容，则" + "您可以修改或使用（包括但不限于链接、复制粘贴等方式）" \
+                         + licenseA + "授权的作品，所产生的衍生作品可以采用" + licenseB + "授权，" + "衍生作品的整体及其部分（包括原" + licenseA \
+                         + "授权的部分）都将受" + licenseB + "的约束，请注意许可证信息的变更管理；（2）若您选择组合兼容，则" + "您可以修改或使用（包括但不限于链接、复制粘贴等方式）" \
+                         + licenseA + "授权的作品，所产生的衍生作品的整体可以采用" + licenseB + "授权，" + "但须确保该衍生作品中原" + licenseA \
+                         + "授权的部分及其修改仍然受" + licenseA + "的约束（不进行许可证变更），而" + licenseB + "约束除" + licenseA + "授权部分的其他部分。"
+            why_or_why_not = ""
     return JsonResponse({"licenseA": licenseA,
                          "licenseB": licenseB,
                          "iscompatibility":iscompatibility,
+                         "how_to_use":how_to_use,
+                         "why_or_why_not":why_or_why_not,
+                         "compatibility_terms":compatibility_terms,
                          })
 
-# 5、许可证兼容性判断
+# 2、许可证兼容性判断
 def compatibility_judge(licenseA,licenseB):
-    df = pd.read_excel('E:\\OSSLSelection\\OSSLSelection\\homepage\\compatibility_0.1.xls', index_col=0)
+    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\compatibility_58.csv', index_col=0)
     compatibility_result = str(df.loc[licenseA, licenseB])
     return compatibility_result
 
-# 5、许可证兼容性判断工具页___许可证不兼容原因判断
-def license_uncompatibility_reason(licenseA,licenseB):
+# 2、许可证兼容性判断工具页___许可证不次级兼容原因判断
+def license_uncompatibility1_reason(licenseA,licenseB):
     reason = ''
-    licenseA_terms = LicenseTerms.objects.filter(spdx=licenseA)[0]
-    licenseB_terms = LicenseTerms.objects.filter(spdx=licenseB)[0]
+    compatibility_terms = []
+    df = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\licenses_terms_58.csv')
+    licenseA_terms = df[df['license']==licenseA].to_dict(orient='records')[0]
+    licenseB_terms = df[df['license']==licenseB].to_dict(orient='records')[0]
     restrictiveA = set()
     restrictiveB = set()
-    if licenseA_terms.attribution == 1:
+    if licenseA_terms['retain_attr'] == 1:
         restrictiveA.add('保留归属')
-    if licenseA_terms.Strengthen_attribution == 1:
+    if licenseA_terms['enhance_attr'] == 1:
         restrictiveA.add('增强归属')
-    if licenseA_terms.modification == 1:
+    if licenseA_terms['modification'] == 1:
         restrictiveA.add('添加修改说明')
-    if licenseA_terms.internet_action == 1:
+    if licenseA_terms['interaction'] == 1:
         restrictiveA.add('网络交互视为分发')
-    if licenseA_terms.patent_anti == 1:
+    if licenseA_terms['patent_term'] == 1:
         restrictiveA.add('反专利诉讼')
-    if licenseA_terms.acceptance == 1:
+    if licenseA_terms['acceptance'] == 1:
         restrictiveA.add('获得接受者对许可证条款的明确同意')
-    if licenseA_terms.law_info != 0:
-        restrictiveA.add(licenseA_terms.law_info)
-    if licenseB_terms.attribution == 1:
+    if licenseB_terms['retain_attr'] == 1:
         restrictiveB.add('保留归属')
-    if licenseB_terms.Strengthen_attribution == 1:
+    if licenseB_terms['enhance_attr'] == 1:
         restrictiveB.add('增强归属')
-    if licenseB_terms.modification == 1:
+    if licenseB_terms['modification'] == 1:
         restrictiveB.add('添加修改说明')
-    if licenseB_terms.internet_action == 1:
+    if licenseB_terms['interaction'] == 1:
         restrictiveB.add('网络交互视为分发')
-    if licenseB_terms.patent_anti == 1:
+    if licenseB_terms['patent_term'] == 1:
         restrictiveB.add('反专利诉讼')
-    if licenseB_terms.acceptance == 1:
+    if licenseB_terms['acceptance'] == 1:
         restrictiveB.add('获得接受者对许可证条款的明确同意')
-    if licenseB_terms.law_info != 0:
-        restrictiveB.add(licenseB_terms.law_info)
-    if licenseA_terms.copyleft == 0 and licenseB_terms.copyleft == 4:
-        reason = "因为" + licenseA + "包含" + str(restrictiveA.difference(restrictiveB)) + "等要求，而" + licenseB + "中未包含此等要求，若需变更许可证，须要征得所有贡献者的同意。"
-    elif (licenseA_terms.copyleft == 1 or licenseA_terms.copyleft == 2 or licenseA_terms.copyleft == 3) and licenseB_terms.copyleft == 4:
-        reason = "因为" + licenseA + "是弱限制型开源许可证，而" + licenseB + "是强限制型开源许可证，弱copyleft的特性与强copyleft不兼容；且" + licenseB + "不是" + licenseA + "的后续版本，也不是其例外兼容许可证，若需变更许可证，须要征得所有贡献者的同意。"
-    elif licenseA_terms.copyleft == 4 and licenseB_terms.copyleft != 0:
-        reason = "因为" + licenseA + "是强限制型开源许可证，且" + licenseB + "不是" + licenseA + "的后续版本，也不是其例外兼容许可证，若需变更许可证，须要征得所有贡献者的同意。"
-    elif licenseA_terms.copyleft == 4 and licenseB_terms.copyleft == 0:
-        reason = "因为" + licenseA + "是强限制型开源许可证，而" + licenseB + "是宽松型开源许可证，因此" + licenseA + "不兼容" + licenseB + "，若需变更许可证，须要征得所有贡献者的同意。"
-    elif licenseA_terms.copyleft == 0 and (licenseB_terms.copyleft == 0 or licenseB_terms.copyleft == 1 or licenseB_terms == 2 or licenseB_terms.copyleft == 3):
-        reason = "因为" + licenseA + "包含" + str(restrictiveA.difference(restrictiveB)) + "等要求，而" + licenseB + "中未包含此等要求，若需变更许可证，须要征得所有贡献者的同意。"
-    elif (licenseA_terms.copyleft == 1 or licenseA_terms.copyleft == 2 or licenseA_terms.copyleft == 3) and licenseB_terms.copyleft == 0:
-        reason = "因为" + licenseA + "是弱限制型开源许可证，而" + licenseB + "是宽松型开源许可证，若需变更许可证，须要征得所有贡献者的同意。"
-    elif (licenseA_terms.copyleft == 1 or licenseA_terms.copyleft == 2 or licenseA_terms.copyleft == 3) and licenseB_terms.copyleft != 0 and licenseB_terms.copyleft != 4:
-        reason = "因为" + licenseA + "和" + licenseB + "都是弱限制型开源许可证，且" + licenseB + "不是" + licenseA + "的后续版本，也不是其例外兼容许可证，若需变更许可证，须要征得所有贡献者的同意。"
+    if licenseA_terms['copyleft'] == 0 and licenseB_terms['copyleft'] != 0:
+        reason = licenseB + "是限制型开源许可证，如果使用（包括但不限于链接、复制粘贴等方式）了" + licenseA + "授权的作品，要求" + licenseA \
+                 + "授权的作品将受" + licenseB + "的约束，而" + licenseA + "包含如下影响次级兼容的条款（" + licenseB + "中没有此等要求）" +"，使其不能变更为" + licenseB + "授权。"
+        compatibility_terms = list(restrictiveA.difference(restrictiveB))
+    elif licenseA_terms['copyleft'] == 0 and licenseB_terms['copyleft'] == 0 :
+        reason = licenseA + "和" + licenseB + "都是宽松型开源许可证，但" + licenseA + "包含如下影响次级兼容的条款（" + licenseB + "中没有此等要求）" + "，使其不能变更为" + licenseB + "授权。"
+        compatibility_terms = list(restrictiveA.difference(restrictiveB))
+    elif licenseA_terms['copyleft'] != 0 and licenseB_terms['copyleft'] != 0:
+        reason = licenseA + "和" + licenseB + "都是限制型开源许可证，它们都包含copyleft的特性，且" + licenseB \
+                 + "不是" + licenseA +"的兼容后续版本，也不是其兼容次级许可证，使" + licenseA + "无法变更为" +licenseB + \
+                 "，进而无法满足" + licenseB + "的copyleft要求。"
+    elif licenseA_terms['copyleft'] != 0 and licenseB_terms['copyleft'] == 0:
+        reason = licenseA + "是限制型开源许可证，而" + licenseB + "是宽松型开源许可证，修改或使用（包括但不限于链接、复制粘贴等方式）了" \
+                 + licenseA + "授权的作品，所产生的衍生作品须遵循" + licenseA + "的copyleft要求，无法采用" + licenseB + "授权。"
+    return reason,compatibility_terms
+
+# 2、许可证兼容性判断工具页___许可证不组合兼容原因判断
+def license_uncompatibility2_reason(licenseA,licenseB):
+    reason = ''
+    df = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\licenses_terms_58.csv')
+    licenseA_terms = df[df['license'] == licenseA].to_dict(orient='records')[0]
+    licenseB_terms = df[df['license'] == licenseB].to_dict(orient='records')[0]
+    if licenseA_terms['copyleft'] != 3 and licenseB_terms['copyleft'] == 2 :
+        reason = licenseB + "是库级弱限制型开源许可证，不限制通过接口调用该许可证授权作品的其他作品，但要求其约束部分（包括但不限于其包含的文件、其调用的组件等）都遵循其copyleft特性，若使用（包括但不限于调用、复制粘贴等方式）了" \
+                 + licenseA + "授权的作品，" + licenseA + "授权的部分须遵循" + licenseB + "，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
+    elif licenseA_terms['copyleft'] != 3 and licenseB_terms['copyleft'] == 3 :
+        reason = licenseB + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，若使用（包括但不限于调用、复制粘贴等方式）了" \
+                 + licenseA + "授权的作品，" + licenseA + "授权的部分须遵循" + licenseB + "，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
+    elif licenseA_terms['copyleft'] == 3:
+        reason = licenseA + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
     return reason
 
 @register.filter
 def get_licensename(dict,key):
     return dict.get(key)
 
-# 6、许可证选择工具页
+# 3、许可证选择工具页
 def license_selection(request):
     # licenses = list(LicenseTerms.objects.values_list('spdx', flat=True).order_by('spdx'))
     df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\github_license_usage.csv')
     popular_dict = {}
     for _, row in df.iterrows():
         popular_dict[row['license']] = row['count']
+    df = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\license_recommended.csv')
     recommand_licenses = df['license'].tolist()
     return render(request,
                   'homepage/templates/license-selection.html',
@@ -196,7 +167,7 @@ def license_selection(request):
                    'popular_dict':popular_dict,}
                   )
 
-# 6、许可证选择工具页__许可证识别及兼容性检测
+# 3、许可证选择工具页__许可证识别及兼容性检测
 num_progress = 1
 def license_check(request):
     upload_file = request.FILES.get("FILE")
@@ -220,7 +191,7 @@ def license_check(request):
             filepath_list = show_files(Path(temp_path), [])
             filepathlist_len = len(filepath_list)
             for i,one_file in enumerate(filepath_list):
-                file_license_list, in_licenses, results = license_detection_file(one_file,results,in_licenses)
+                in_licenses, results = license_detection_file(one_file,results,in_licenses)
                 num_progress2 = i * 100 / filepathlist_len
                 if num_progress2 >= 1:
                     num_progress = num_progress2
@@ -228,39 +199,38 @@ def license_check(request):
             z = rarfile.RarFile(uploadfile_path, "r")
             z.extractall(temp_path)
             z.close()
-            filepath_list, filesname_list, treestr_list = show_files(Path(temp_path), [], [], [], 0)
+            filepath_list = show_files(Path(temp_path), [])
             filepathlist_len = len(filepath_list)
             for i,one_file in enumerate(filepath_list):
-                file_license_list, in_licenses, results = license_detection_file(one_file,results,in_licenses)
+                in_licenses, results = license_detection_file(one_file,results,in_licenses)
                 num_progress2 = i * 100 / filepathlist_len
                 if num_progress2 >= 1:
                     num_progress = num_progress2
         else:
-            file_license_list, in_licenses, results = license_detection_file(uploadfile_path)
+            return JsonResponse({"in_licenses": "error2",})
         num_progress = 100
         dependencies = depend_detection(temp_path)
         confilct_copyleft_dir, confilct_depend_dict= conflict_dection(results,dependencies)
-        json_list = tree_json(Path(temp_path), results, confilct_copyleft_dir, confilct_depend_dict, pi=0, fi=0, json_list=[])
+        json_list = tree_json(Path(temp_path),results,confilct_copyleft_dir,confilct_depend_dict,pi=0,fi=0,json_list=[])
         shutil.rmtree("E:\\oss_license_selection_analyze\\temp_files\\")
-        llist, checked_list, compatible_licenses, compatible_1_2_3_4_list, compatible_1_2_4_list, compatible_3_list = license_compatibility_filter(in_licenses)
+        in_licenses, checked_list, compatible_licenses, compatible_both_list, compatible_secondary_list, compatible_combine_list = license_compatibility_filter(in_licenses)
         num_progress = 1
-        return JsonResponse({"in_licenses": llist,
+        return JsonResponse({"in_licenses": in_licenses,
                              'checked_list':checked_list,
                              'licenselist_recommended':compatible_licenses,
-                             'compatible_1_2_3_4_list': compatible_1_2_3_4_list,
-                             'compatible_1_2_4_list':compatible_1_2_4_list,
-                             'compatible_3_list': compatible_3_list,
+                             'compatible_both_list': compatible_both_list,
+                             'compatible_secondary_list':compatible_secondary_list,
+                             'compatible_combine_list': compatible_combine_list,
                              "files_license_detail": results,
                              "json_list":json_list,
                              })
 
-# 6、许可证选择工具页__许可证识别__显示进度
+# 3、许可证选择工具页__许可证识别__显示进度
 def show_progress(request):
-    # print('show_progress----------'+str(num_progress))
     num_progress_2 = round(num_progress,2)
     return JsonResponse(num_progress_2, safe=False)
 
-# 6、许可证选择工具页__许可证识别__遍历文件
+# 3、许可证选择工具页__许可证识别__遍历文件
 def show_files(pathname, files_path):
     file_path = str(pathname.parent) + '\\' + pathname.name
     if pathname.is_file():
@@ -270,6 +240,7 @@ def show_files(pathname, files_path):
             show_files(cp, files_path)
     return files_path
 
+# 3、许可证选择工具页__许可证识别__文件树标记
 def tree_json(pathname,results, confilct_copyleft_dict, confilct_depend_dict, pi,fi,json_list):
     file_path = str(pathname.parent) + '\\' + pathname.name
     if pathname.is_file():
@@ -293,7 +264,7 @@ def tree_json(pathname,results, confilct_copyleft_dict, confilct_depend_dict, pi
     return json_list
 
 
-# 6、许可证选择工具页__许可证识别__Ninka识别文件
+# 3、许可证选择工具页__许可证识别__Ninka识别文件
 def license_detection_file(one_file,results,in_licenses):
     Other_Licenses = ['SeeFile', 'UNKNOWN']
     try:
@@ -323,8 +294,9 @@ def license_detection_file(one_file,results,in_licenses):
         init_file_name = init_file_name.replace(r"\\", '\\')
         results[init_file_name] = 'UNKOWN'
         in_licenses.add('Other')
-    return file_license_list,in_licenses,results
+    return in_licenses,results
 
+# 3、许可证选择工具页__依赖识别
 def depend_detection(src_path):
     output_depend_path = "E:\\oss_license_selection_analyze\\temp_files\\output_depend"
     if os.path.exists(output_depend_path) == False:
@@ -349,10 +321,10 @@ def depend_detection(src_path):
                     dependencies[dest_file] = src_file
     return dependencies
 
-# 6、许可证选择工具页__许可证识别__冲突检测
+# 3、许可证选择工具页__依赖识别__冲突检测
 def conflict_dection(results,dependencies):
     temp_path = "E:\\oss_license_selection_analyze\\temp_files\\zziprar"
-    df1 = pd.read_excel(r'E:\OSSLSelection\OSSLSelection\homepage\compatibility_0.1.xls', index_col=0)
+    df1 = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\compatibility_58.csv', index_col=0)
     check_license_list = df1.index.tolist()
     confilct_copyleft_dict = {}
     confilct_depend_dict = {}
@@ -393,7 +365,7 @@ def conflict_dection(results,dependencies):
                         confilct_copyleft_dict[longestCommonDir(fileA, fileB)] = fileA.replace(temp_path,'') + "的许可证" + lA + "和" + fileB.replace(temp_path,'') + "的许可证" + lB +"互不兼容。"
     return confilct_copyleft_dict,confilct_depend_dict
 
-
+# 3、许可证选择工具页__依赖识别__共同目录
 def longestCommonDir(fileA,fileB):
     pathname = Path(fileA).parent
     while str(pathname) not in fileB:
@@ -402,17 +374,17 @@ def longestCommonDir(fileA,fileB):
         pathname = pathname.parent
     return str(pathname)
 
-# 6、许可证选择工具页__许可证识别__兼容许可证筛选
+# 3、许可证选择工具页__许可证识别__兼容许可证筛选
 def license_compatibility_filter(in_licenses):
-    df = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\github_license_usage.csv')
+    df = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\license_recommended.csv')
     all_licenses = df['license'].tolist()
     compatible_licenses = df['license'].tolist()
-    df1 = pd.read_excel(r'E:\OSSLSelection\OSSLSelection\homepage\compatibility_0.1.xls', index_col=0)
+    compatible_both_list = df['license'].tolist()
+    compatible_secondary_list = df['license'].tolist()
+    compatible_combine_list = df['license'].tolist()
+    df1 = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\compatibility_58.csv', index_col=0)
     check_license_list = df1.index.tolist()
     checked_list = []
-    compatible_1_2_3_4_list = df['license'].tolist()
-    compatible_1_2_4_list = df['license'].tolist()
-    compatible_3_list = df['license'].tolist()
     for licenseA in list(in_licenses):
         if 'or' not in licenseA:
             if licenseA in check_license_list:
@@ -422,42 +394,43 @@ def license_compatibility_filter(in_licenses):
                     if compatibility_result == '0':
                         if licenseB in compatible_licenses:
                             compatible_licenses.remove(licenseB)
-                    if compatibility_result != '1、3' and compatibility_result != '3、4':
-                        if licenseB in compatible_1_2_3_4_list:
-                            compatible_1_2_3_4_list.remove(licenseB)
-                    if '1' not in compatibility_result and '2' not in compatibility_result and '4' not in compatibility_result:
-                        if licenseB in compatible_1_2_4_list:
-                            compatible_1_2_4_list.remove(licenseB)
-                    if '3' not in compatibility_result:
-                        if licenseB in compatible_3_list:
-                            compatible_3_list.remove(licenseB)
+                    if compatibility_result != '1,2':
+                        if licenseB in compatible_both_list:
+                            compatible_both_list.remove(licenseB)
+                    if compatibility_result != '1':
+                        if licenseB in compatible_secondary_list:
+                            compatible_secondary_list.remove(licenseB)
+                    if compatibility_result != '2':
+                        if licenseB in compatible_combine_list:
+                            compatible_combine_list.remove(licenseB)
         else:
-            checked_list.append(licenseA)
-            for licenseB in all_licenses:
-                dual_licenses = licenseA.split(' or ')
-                is_remove = 1
-                for sub_license in dual_licenses:
-                    if sub_license in check_license_list:
-                        compatibility_result = str(df1.loc[sub_license, licenseB])
-                    if compatibility_result != '0':
-                        is_remove = 0
-                if is_remove and licenseB in compatible_licenses:
-                    compatible_licenses.remove(licenseB)
+            if licenseA in check_license_list:
+                checked_list.append(licenseA)
+                for licenseB in all_licenses:
+                    dual_licenses = licenseA.split(' or ')
+                    is_remove = 1
+                    for sub_license in dual_licenses:
+                        if sub_license in check_license_list:
+                            compatibility_result = str(df1.loc[sub_license, licenseB])
+                        if compatibility_result != '0':
+                            is_remove = 0
+                    if is_remove and licenseB in compatible_licenses:
+                        compatible_licenses.remove(licenseB)
     llist = list(in_licenses)
     llist = sorted(llist)
     if 'Other' in llist:
         llist.append('Other')
         llist.remove('Other')
-    return llist, checked_list, compatible_licenses, compatible_1_2_3_4_list, compatible_1_2_4_list, compatible_3_list
+    return llist, checked_list, compatible_licenses, compatible_both_list, compatible_secondary_list, compatible_combine_list
 
 
-# 6、许可证选择工具页__许可证类型推荐
+# 3、许可证选择工具页__许可证类型推荐
 def license_type_choice(request):
     return render(request,
                   'homepage/templates/license-type-choice.html',
                   )
 
-# 6、许可证选择工具页__开源商业模式
+# 3、许可证选择工具页__开源商业模式
 def business_model(request):
     business_terms = BusinessModel.objects.all()
     return render(request,
@@ -467,7 +440,7 @@ def business_model(request):
 
 
 
-# 6、许可证选择工具页__许可证条款分析
+# 3、许可证选择工具页__交互式条款选择
 def license_terms_choice(request):
     question1_val = request.POST.get('question1_val')
     question2_val = request.POST.get('question2_val')
@@ -476,16 +449,17 @@ def license_terms_choice(request):
     question5_val = request.POST.get('question5_val')
     question6_val = request.POST.get('question6_val')
     question7_val = request.POST.get('question7_val')
-    cur_question = int(request.POST.get('cur_question'))
     init_licenselist = request.POST.getlist('init_licenselist')
-    licenses_spdx = list(LicenseTerms.objects.values_list('spdx', flat=True).order_by('spdx'))
-    licenses_copyleft = list(LicenseTerms.objects.values_list('copyleft', flat=True).order_by('spdx'))
-    licenses_modification = list(LicenseTerms.objects.values_list('modification', flat=True).order_by('spdx'))
-    licenses_internet_action = list(LicenseTerms.objects.values_list('internet_action', flat=True).order_by('spdx'))
-    licenses_patent_lice = list(LicenseTerms.objects.values_list('patent_lice', flat=True).order_by('spdx'))
-    licenses_patent_anti = list(LicenseTerms.objects.values_list('patent_anti', flat=True).order_by('spdx'))
-    licenses_patent_cant = list(LicenseTerms.objects.values_list('patent_cant', flat=True).order_by('spdx'))
-    licenses_trademark_l = list(LicenseTerms.objects.values_list('trademark_l', flat=True).order_by('spdx'))
+    cur_question = int(request.POST.get('cur_question'))
+    df = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\licenses_terms_58.csv')
+    licenses_spdx = df['license'].tolist()
+    licenses_copyleft = df['copyleft'].tolist()
+    licenses_copyright = df['copyright'].tolist()
+    licenses_patent = df['patent'].tolist()
+    licenses_patent_term = df['patent_term'].tolist()
+    licenses_trademark = df['trademark'].tolist()
+    licenses_interaction = df['interaction'].tolist()
+    licenses_modification = df['modification'].tolist()
     # 初始化推荐列表
     licenselist_recommended = init_licenselist
     # 满足各个条款的列表的列表
@@ -500,7 +474,7 @@ def license_terms_choice(request):
         if question1_val == '宽松型开源许可证':
             q2_show = 0
             for i, x in enumerate(licenses_copyleft):
-                if x == 0:
+                if x == 0 and licenses_copyright[i] != -1:
                     license_ok.append(licenses_spdx[i])
         elif question1_val == '限制型开源许可证':
             for i, x in enumerate(licenses_copyleft):
@@ -508,7 +482,7 @@ def license_terms_choice(request):
                     license_ok.append(licenses_spdx[i])
         elif question1_val == '公共领域许可证':
             q2_show = 0
-            for i, x in enumerate(licenses_copyleft):
+            for i, x in enumerate(licenses_copyright):
                 if x == -1:
                     license_ok.append(licenses_spdx[i])
         rr_license.append(license_ok)
@@ -523,17 +497,13 @@ def license_terms_choice(request):
             for i, x in enumerate(licenses_copyleft):
                 if x == 1:
                     license_ok.append(licenses_spdx[i])
-        elif question2_val == '模块级__弱限制型开源许可证':
+        elif question2_val == '库级__弱限制型开源许可证':
             for i, x in enumerate(licenses_copyleft):
                 if x == 2:
                     license_ok.append(licenses_spdx[i])
-        elif question2_val == '库级__弱限制型开源许可证':
-            for i, x in enumerate(licenses_copyleft):
-                if x == 3:
-                    license_ok.append(licenses_spdx[i])
         else:
             for i, x in enumerate(licenses_copyleft):
-                if x == 4:
+                if x == 3:
                     license_ok.append(licenses_spdx[i])
         rr_license.append(license_ok)
         rr_question_var.append(question2_val)
@@ -544,16 +514,16 @@ def license_terms_choice(request):
         # 满足该条款的许可证列表
         license_ok = []
         if question3_val == '不提及专利权':
-            for i, x in enumerate(licenses_patent_lice):
+            for i, x in enumerate(licenses_patent):
                 if x == 0:
                     license_ok.append(licenses_spdx[i])
         elif question3_val == '明确授予专利权':
-            for i, x in enumerate(licenses_patent_lice):
+            for i, x in enumerate(licenses_patent):
                 if x == 1:
                     license_ok.append(licenses_spdx[i])
         else:
-            for i, x in enumerate(licenses_patent_cant):
-                if x == 1:
+            for i, x in enumerate(licenses_patent):
+                if x == -1:
                     license_ok.append(licenses_spdx[i])
         rr_license.append(license_ok)
         rr_question_var.append(question3_val)
@@ -564,11 +534,11 @@ def license_terms_choice(request):
         # 满足该条款的许可证列表
         license_ok = []
         if question4_val == '包含反专利诉讼条款':
-            for i, x in enumerate(licenses_patent_anti):
+            for i, x in enumerate(licenses_patent_term):
                 if x == 1:
                     license_ok.append(licenses_spdx[i])
         else:
-            for i, x in enumerate(licenses_patent_anti):
+            for i, x in enumerate(licenses_patent_term):
                 if x == 0:
                     license_ok.append(licenses_spdx[i])
         rr_license.append(license_ok)
@@ -580,11 +550,11 @@ def license_terms_choice(request):
         # 满足该条款的许可证列表
         license_ok = []
         if question5_val == '不提及商标权':
-            for i, x in enumerate(licenses_trademark_l):
+            for i, x in enumerate(licenses_trademark):
                 if x == 0:
                     license_ok.append(licenses_spdx[i])
         else:
-            for i, x in enumerate(licenses_trademark_l):
+            for i, x in enumerate(licenses_trademark):
                 if x == 1:
                     license_ok.append(licenses_spdx[i])
         rr_license.append(license_ok)
@@ -596,11 +566,11 @@ def license_terms_choice(request):
         # 满足该条款的许可证列表
         license_ok = []
         if question6_val == '网络部署视为分发':
-            for i, x in enumerate(licenses_internet_action):
+            for i, x in enumerate(licenses_interaction):
                 if x == 1:
                     license_ok.append(licenses_spdx[i])
         else:
-            for i, x in enumerate(licenses_internet_action):
+            for i, x in enumerate(licenses_interaction):
                 if x == 0:
                     license_ok.append(licenses_spdx[i])
         rr_license.append(license_ok)
@@ -628,147 +598,107 @@ def license_terms_choice(request):
     terms_choice = []
     for i in range(7):
         licenselist_recommended = sorted(list(set(licenselist_recommended) & set(rr_license[i])))
-        terms_choice.append(rr_question_var[i])
+        if rr_question_var[i] != None:
+            terms_choice.append(rr_question_var[i])
+
+
     return JsonResponse({"terms_choice": terms_choice,
                          "licenselist_recommended":licenselist_recommended,
                          "q2_show":q2_show,
                          })
 
 
-# 6、许可证选择工具页__许可证细节对比
+# 3、许可证选择工具页__许可证要素对比
 def license_compare(request):
     compare_licenselist = request.POST.getlist('compare_licenselist')
-    compared_licenselist = []
-    for cl in compare_licenselist:
-        license_terms = LicenseTerms.objects.get(spdx=cl)
-        license_dict = model_to_dict(license_terms)
-        compared_licenselist.append(license_dict)
-    return JsonResponse({"compared_licenselist": compared_licenselist,
+    df = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\licenses_terms_58.csv')
+    df = df.query('license in '+str(compare_licenselist))
+    result_list = df.to_dict(orient='records')
+    return JsonResponse({"compared_licenselist": result_list,
                          })
 
 
-# 6、许可证选择工具页__许可证推荐排序——流行度
-def sort_license_popular(request):
-    license_popular_asc = request.POST.get('license_popular_asc')
-    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\github_license_usage.csv')
-    popular_dict = {}
-    for _,row in df.iterrows():
-        popular_dict[row['license']] = row['count']
-    return JsonResponse({"popular_dict": popular_dict,
-                         "license_popular_asc":license_popular_asc,
-                         })
+# 3、许可证选择工具页__许可证推荐排序
+def sort_license(request):
+    sort_val = request.POST.get('sort_val')
+    if sort_val == 'complex_desc' or sort_val == 'complex_asc':
+        df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\license_readability.csv')
+        complex_dict = {}
+        for _,row in df.iterrows():
+            complex_dict[row['license']] = int(row['mean'])
+        return JsonResponse({"sort_dict": complex_dict,
+                             })
+    else:
+        df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\github_license_usage.csv')
+        popular_dict = {}
+        for _, row in df.iterrows():
+            popular_dict[row['license']] = int(row['count'])
+        return JsonResponse({"sort_dict": popular_dict,
+                             })
 
 
-# 6、许可证选择工具页__许可证推荐排序——可读性
-def sort_license_complex(request):
-    license_complex_asc = request.POST.get('license_complex_asc')
-    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\license_readability.csv')
-    complex_dict = {}
-    for _,row in df.iterrows():
-        complex_dict[row['license']] = int(row['mean'])
-    return JsonResponse({"complex_dict": complex_dict,
-                         "license_complex_asc":license_complex_asc,
-                         })
-
-
-# 7、许可证使用详情页
+# 4、许可证使用数据展示页
 def license_trend(request):
-    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\github_repos_info_removeother.csv')
+    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\github_repos_removenulllang.csv')
     github_topics_count = df['topic'].value_counts()
     github_languages_count = df['language'].value_counts()
-    github_licenses_count = df['license'].value_counts()
-    github_topics = github_topics_count[:27].index.tolist()
-    github_languages = github_languages_count[:30].index.tolist()
-    github_licenses = github_licenses_count[:10].index.tolist()
+    github_topics = github_topics_count.index.tolist()
+    github_topics_10 = github_topics_count.index[:10].tolist()
+    github_languages = github_languages_count[:10].index.tolist()
+    github_languages_10 = github_languages_count[:12].index.tolist()
+    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\license_recommended.csv')
+    recommand_licenses = df['license'].tolist()
     return render(request,
                   'homepage/templates/license-trend.html',
                   {   'github_topics':github_topics,
+                      'github_topics_10':github_topics_10,
                       'github_languages':github_languages,
-                      "github_licenses":github_licenses,})
+                      'github_languages_10':github_languages_10,
+                      "github_licenses":recommand_licenses,
+                      })
 
-# 7、许可证使用详情页__画图
+# 4、许可证使用数据展示页__画图
 def draw_trend(request):
-    selected_data_source = request.POST.get('selected_data_source')
     selected_topics = request.POST.getlist('selected_topics')
     selected_languages = request.POST.getlist('selected_languages')
     selected_licenses = request.POST.getlist('selected_licenses')
     minstar = request.POST.get('minstar')
     maxstar = request.POST.get('maxstar')
-    datalist = []
-    datadict = {}
-    datelist = ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021']
-    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\github_license_usage.csv')
-    recommand_licenses = df['license'].tolist()
-    if selected_data_source == "github":
-        df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\github_repos_info_removeother.csv')
-        if selected_topics[0] != 'all':
-            df = df.query('topic in '+str(selected_topics))
-        if selected_languages[0] != 'all':
-            df = df.query('language in '+str(selected_languages))
-        if minstar != None and minstar.isdigit():
-            df = df[df['stars'] > float(minstar)]
-        if maxstar != None and maxstar.isdigit():
-            df = df[df['stars'] < float(maxstar)]
-        if selected_licenses[0] != 'all':
-            df = df.query('license in '+str(selected_licenses))
-        else:
-            df = df.query('license in ' + str(recommand_licenses))
-        df['date'] = pd.to_datetime(df['created_at'])
-        df1 = df.groupby([df['date'].dt.year,df['license']])['repo_name'].agg({'count'})
-        df2 = df.groupby([df['license']])['repo_name'].agg({'count'})
-        for i,r in df1.iterrows():
-            if r.name[1] not in datadict.keys():
-                datadict[r.name[1]] = [0.0] * 14
-                datadict[r.name[1]][datelist.index(str(r.name[0]))] = float(r['count'])
-            else:
-                datadict[r.name[1]][datelist.index(str(r.name[0]))] = float(r['count'])
-        sorted(datadict)
-        for i in datadict.keys():
-            one_data = {}
-            one_data['name'] = i
-            one_data['data'] = datadict[i]
-            datalist.append(one_data)
-        distribut_dic = []
-        for i,r in df2.iterrows():
-            distribut_dic.append([r.name, float(r['count'])])
+    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\github_repos_removenulllang.csv')
+    df = df.query('topic in '+str(selected_topics))
+    df = df.query('language in '+str(selected_languages))
+    if minstar != None and minstar.isdigit():
+        df = df[df['stars'] > float(minstar)]
+    if maxstar != None and maxstar.isdigit():
+        df = df[df['stars'] < float(maxstar)]
+    df = df.query('license in '+str(selected_licenses))
+    datelist, datalist, distribut_dic = draw_trend_data(df)
     return JsonResponse({"datalist":datalist,
                          "datelist":datelist,
                          "distribut_dict":distribut_dic,
                          })
 
-
-# 8、许可证常见问答页
-def license_fqa(request):
-    f = open('E:\\OSSLSelection\\OSSLSelection\\homepage\\static\\doc\\FQA\\0BSD.txt',encoding='utf-8-sig')
-    fqas = f.read()
-    return render(request,
-                      'homepage/templates/license_fqa.html',
-                      {
-                         'fqa':fqas,
-                      },
-                  )
-# 8、许可证常见问答页
-def license_fqa_list(request):
-    spdx = request.POST.get('spdx')
-    f = open('E:\\OSSLSelection\\OSSLSelection\\homepage\\static\\doc\\FQA\\'+spdx+'.txt',encoding='utf-8-sig')
-    fqas = f.read()
-    return JsonResponse({"fqa": fqas,})
-
-# 8、许可证常见问答机器人
-def license_bot(request):
-    return render(request,
-                  'homepage/templates/fqa-bot.html',
-                  )
-
-# 9、开源许可证框架页
-def license_frame(request):
-    return render(request,
-                  'homepage/templates/license-frame.html',
-                  )
-
-
-# 10、联系我们
-def contact(request):
-    return render(request,
-                  'homepage/templates/contact.html',
-                  )
+def draw_trend_data(df):
+    datalist = []
+    datadict = {}
+    df['date'] = pd.to_datetime(df['created_at'])
+    df1 = df.groupby([df['date'].dt.year, df['license']])['repo_name'].agg({'count'})
+    df2 = df.groupby([df['license']])['repo_name'].agg({'count'})
+    datelist = ['2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020',
+                '2021']
+    for i, r in df1.iterrows():
+        if r.name[1] not in datadict.keys():
+            datadict[r.name[1]] = [0.0] * 14
+            datadict[r.name[1]][datelist.index(str(r.name[0]))] = float(r['count'])
+        else:
+            datadict[r.name[1]][datelist.index(str(r.name[0]))] = float(r['count'])
+    sorted(datadict)
+    for i in datadict.keys():
+        one_data = {}
+        one_data['name'] = i
+        one_data['data'] = datadict[i]
+        datalist.append(one_data)
+    distribut_dic = []
+    for i, r in df2.iterrows():
+        distribut_dic.append([r.name, float(r['count'])])
+    return datelist,datalist,distribut_dic

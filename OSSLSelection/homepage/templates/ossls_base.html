@@ -1,21 +1,15 @@
 {% load static %}
 <!doctype html>
-<!--<html lang="ZXX" xmlns="http://www.w3.org/1999/html">-->
 <html lang="en" class="no-js">
 
 <head>
 	<title>OSSLS--Open Source Software License Selection</title>
-	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name=description content="">
 	<meta name=author content="Enventer">
-<!--	<meta name="viewport" content="width=device-width, initial-scale=1">-->
 	<link rel="icon" href="/static/img/favicon.png" type="image/png">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
-<!--	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
 	<!-- Fontawesome CSS -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 	<!-- Google Font -->
@@ -31,6 +25,7 @@
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="/static/css/style.css">
 	<link rel="stylesheet" href="/static/css/responsive.css">
+
 	{% block extraCSS %}{% endblock %}
 </head>
 
@@ -40,7 +35,7 @@
 	<![endif]-->
 
 
-	<!--  Preloader Start========================-->
+	<!--=================  Preloader Start========================-->
 	<div id='preloader'>
 		<div id='status'>
 			<img src='/static/img/loading.gif' alt='LOADING....!!!!!' />
@@ -63,26 +58,15 @@
 						<div class="main-menu f-right">
 							<nav id="mobile-menu">
 								<ul>
-									<li><a href="{% url 'ossls:index' %}">首页</a></li>
-									<li>
-										<a href="#" onclick="return false">开源许可证<i class="fas fa-angle-down"></i></a>
-										<ul class="dropdown">
-											<li><a href="{% url 'ossls:about_license' %}">什么是开源许可证</a></li>
-											<li><a href="{% url 'ossls:license_frame' %}">开源许可证框架</a></li>
-											<li><a href="{% url 'ossls:license_list' %}">开源许可证列表</a></li>
-											<li><a href="{% url 'ossls:license_feature' %}">条款特征</a></li>
-											<li><a href="{% url 'ossls:license_fqa' %}">开源许可证FQA</a></li>
-										</ul>
-									</li>
+									<li><a  href="{% url 'ossls:index' %}">首页</a></li>
 									<li>
 										<a href="#" onclick="return false">工具<i class="fas fa-angle-down"></i></a>
 										<ul class="dropdown">
 											<li><a href="{% url 'ossls:license_compatibility' %}">开源许可证兼容性判断</a></li>
-											<li><a href="{% url 'ossls:license_selection' %}">开源许可证选择推荐</a></li>
-											<li><a href="{% url 'ossls:license_trend' %}">开源许可证数据展示</a></li>
+											<li><a href="{% url 'ossls:license_selection' %}">开源许可证选择</a></li>
+											<li><a href="{% url 'ossls:license_trend' %}">趋势一览</a></li>
 										</ul>
 									</li>
-<!--									<li><a href="{% url 'ossls:contact' %}">联系我们</a></li>-->
 								</ul>
 							</nav>
 						</div>
@@ -92,35 +76,21 @@
 		</div>
 	</header>
 
-	<!--顶层栏-->
-	<div class="hero-banner" style="background-image: url({% static 'img/banner_bg.png'%});">
-		<div class="about-hero-text">
-			<h1>
-				{% block title %}
-       			{% endblock %}
-			</h1>
-
-			<p style="font-size:13px">
-				{% block title_instruction %}
-				{% endblock %}
-			</p>
-		</div>
-	</div>
-
-	{% block beforebody %}
-
-	{% endblock %}
-
-	<!-- =========商业模式与社区发展=========== -->
 	<div class="team-area">
-		<div class="container">
-			   {% block body %}
-			   {% endblock %}
+		{% block beforebody %}
+
+		{% endblock %}
+
+		<div class="container" >
+			{% block body %}
+			{% endblock %}
 		</div>
+
 	</div>
+
 
 	<!-- =========Footer Area=========== -->
-			<!--copyright-->
+	<!--copyright-->
 	<footer>
 		<p>All rights reserved @ blesswoo 2021</p>
 	</footer>

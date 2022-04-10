@@ -2,56 +2,54 @@
 
 {% block extraCSS %}
 	<link rel="stylesheet" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+	<link rel="stylesheet" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
     <link href="/static/css/foundation.min.css" rel="stylesheet" type="text/css">
     <link href="/static/css/foundation-datepicker.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="/static/css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="/static/css/default.css">
+	<link rel="stylesheet" href="/static/css/bootstrap-select.css">
+
+<!--	<link rel="stylesheet" href="/static/css/bootstrap.min.css">-->
 {% endblock %}
 
-{% block title %}
-	开源许可证的使用情况
+{% block beforebody %}
+	<!--流程图标-->
+	<div style="margin:80px 0px 50px 0px;" >
+	</div>
 {% endblock %}
-
 {% block body %}
-	<div class="row" style="height:700px">
+	<div class="row" style="height:700px;width:100%;">
 		<!--条件筛选-->
 		<div class="mainbox">
 			<div class="chose">
 				<div class="box">
-					<span>数据来源</span>
-					<ul class="ul0" id="repo_source">
-						<li class="act" value="github">GitHub</li>
-						<li value="libraries_io">Libraries.io</li>
+					<span>开源许可证</span>
+					<ul class="ul1" id="repo_license">
+						{% for license in github_licenses %}
+							<li class="box-li act"  value="{{license}}">{{license}}</li>
+						{% endfor %}
 					</ul>
 				</div>
 				<div class="box">
 					<span>项目主题</span>
-					<ul class="ul1" id="repo_topics">
-						<li class="act" value="all">全部</li>
-						{% for topic in github_topics %}
-							<li value="{{topic}}">{{topic}}</li>
-						{% endfor %}
-					</ul>
+					<div>
+						<select id="repo_topics" class="selectpicker" multiple data-actions-box="true" data-selected-text-format="count > 3">
+							{% for topic in github_topics %}
+								<option selected="selected">{{topic}}</option>
+							{% endfor %}
+						</select>
+					</div>
 				</div>
 				<div class="box">
 					<span>编程语言</span>
-					<ul class="ul2" id="repo_language">
-						<li class="act" value="all">全部</li>
-						{% for language in github_languages %}
-							<li value="{{language}}">{{language}}</li>
-						{% endfor %}
-					</ul>
+					<div>
+						<select id="repo_languages" class="selectpicker" multiple data-actions-box="true" data-selected-text-format="count > 3">
+							{% for language in github_languages %}
+								<option selected="selected">{{language}}</option>
+							{% endfor %}
+						</select>
+					</div>
 				</div>
-				<div class="box">
-					<span>开源许可证</span>
-					<ul class="ul3" id="repo_license">
-						<li class="act" value="all">全部</li>
-						{% for license in github_licenses %}
-							<li value="{{license}}">{{license}}</li>
-						{% endfor %}
-					</ul>
-				</div>
-
 				<div class="box">
 					<span>stars范围</span>
 					<div class="fanwei">
@@ -101,120 +99,42 @@
 <!--	<script src="https://cdn.jsdelivr.net/npm/echarts@5.0.0-alpha.1/dist/echarts.min.js"></script>-->
 <!--	<script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>-->
 	<script src="https://cdn.bootcdn.net/ajax/libs/echarts/4.2.1/echarts.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap-select.js"></script>
     <script type="text/javascript">
     	$(document).ready(function(){
-    		$(".ul0 li").click(function() {
-                $(this).siblings('li').removeClass('act');
-                $(this).addClass('act');
-            });
-
             $(".ul1 li").click(function() {
             	if($(this).hasClass("act")){
                  	$(this).removeClass('act');
                 }
                 else{
-                	if($(".ul1 li:first").hasClass("act")){
-                    	$(".ul1 li:first").removeClass('act');
-                	}
                     $(this).addClass('act');
             	}
             });
-            $(".ul1 li:first").click(function() {
-                if($(this).hasClass("act")){
-                    $(this).siblings('li').removeClass('act');
-                }
-                else{
-                    $(this).siblings('li').removeClass('act');
-                    $(this).addClass('act');
-                }
-            });
-
-            $(".ul2 li").click(function() {
-            	if($(this).hasClass("act")){
-                 	$(this).removeClass('act');
-                }
-                else{
-                	if($(".ul2 li:first").hasClass("act")){
-                    	$(".ul2 li:first").removeClass('act');
-                	}
-                    $(this).addClass('act');
-            	}
-            });
-            $(".ul2 li:first").click(function() {
-                if($(this).hasClass("act")){
-                    $(this).siblings('li').removeClass('act');
-                }
-                else{
-                    $(this).siblings('li').removeClass('act');
-                    $(this).addClass('act');
-                }
-            });
-
-            $(".ul3 li").click(function() {
-            	if($(this).hasClass("act")){
-                 	$(this).removeClass('act');
-                }
-                else{
-                	if($(".ul3 li:first").hasClass("act")) {
-                    	$(".ul3 li:first").removeClass('act');
-
-                	}
-                    $(this).addClass('act');
-            	}
-            });
-            $(".ul3 li:first").click(function() {
-                if($(this).hasClass("act")){
-                    $(this).siblings('li').removeClass('act');
-                }
-                else{
-                    $(this).siblings('li').removeClass('act');
-                    $(this).addClass('act');
-
-                }
-            });
+            $("#data_submit").click();
         });
 
 		<!--查询数据展示按钮-->
 		$("#data_submit").click(function(e){
-			var selected_data_source = 'github';
 			var selected_topics = [];
 			var selected_languages = [];
 			var selected_licenses = [];
-			var len = $(".ul0 li").length;
+            var len = $("#repo_license li").length;
             for (var i = 0; i < len; i++) {
-            	$('.ul0').each(function() {
+            	$('#repo_license').each(function() {
                  	var classlen = $(this).find('li').eq(i).attr('class');
-                	if (classlen == "act") {
-                    	elected_data_source = $(this).find('li').eq(i).attr('value');
-                    }
-                })
-            }
-            var len = $(".ul1 li").length;
-            for (var i = 0; i < len; i++) {
-            	$('.ul1').each(function() {
-                 	var classlen = $(this).find('li').eq(i).attr('class');
-                	if (classlen == "act") {
-                    	selected_topics.push($(this).find('li').eq(i).attr('value'));
-                    }
-                })
-            }
-            var len = $(".ul2 li").length;
-            for (var i = 0; i < len; i++) {
-            	$('.ul2').each(function() {
-                 	var classlen = $(this).find('li').eq(i).attr('class');
-                	if (classlen == "act") {
-                    	selected_languages.push($(this).find('li').eq(i).attr('value'));
-                    }
-                })
-            }
-            var len = $(".ul3 li").length;
-            for (var i = 0; i < len; i++) {
-            	$('.ul3').each(function() {
-                 	var classlen = $(this).find('li').eq(i).attr('class');
-                	if (classlen == "act") {
+                	if (classlen == "box-li act") {
                     	selected_licenses.push($(this).find('li').eq(i).attr('value'));
                     }
                 })
+            }
+            var options = $("#repo_languages option:selected");
+            for (var i = 0; i < options.length; i++) {
+            	console.log(options[i]);
+				selected_languages.push(options[i].text);
+            }
+            var options = $("#repo_topics option:selected");
+            for (var i = 0; i < options.length; i++) {
+				selected_topics.push(options[i].text);
             }
             var minstar = $('#minstar').val();
             var maxstar = $('#maxstar').val();
@@ -226,7 +146,6 @@
 					url:"{% url 'ossls:draw_trend' %}",
 					traditional:true,
 					data:{
-						selected_data_source:selected_data_source,
 						selected_topics:selected_topics,
 						selected_languages:selected_languages,
 						selected_licenses:selected_licenses,
@@ -237,7 +156,7 @@
 						xhr.setRequestHeader("X-CSRFToken","{{csrf_token}}");
 					},
 					success:function(result){
-						<!--	  画趋势图			-->
+						<!--画趋势图-->
 						var datalist = [];
 						for(var i = 0; i < result['datalist'].length; i++){
 							var one_data = {
@@ -455,6 +374,7 @@
 			$('#first').addClass('active');
 			$('#second').removeClass('active');
 		});
+
 		$('.l_distribution').click(function () {
 			$('.l_distribution').addClass('active');
 			$('.l_distribution > .icon').addClass('active');
@@ -465,6 +385,5 @@
 			$('#first').removeClass('active');
 			$('#second').addClass('active');
 		});
-
     </script>
 {% endblock %}
