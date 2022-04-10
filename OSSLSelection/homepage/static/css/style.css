@@ -1176,3 +1176,12 @@ ul, ol { list-style: none; }
 		  transition: all .6s ease-in-out;
 }
 
+.type-choice-h1{margin-top:0pt; margin-bottom:14pt; text-align:center; line-height:200%; widows:0; orphans:0; font-size:26pt;font-family:'华光中雅_CNKI'}
+.type-choice-h1-instruction{margin-top:14pt; margin-bottom:14pt; text-align:center; line-height:250%; font-size:20pt;font-family:'微软雅黑 Light';}
+.type-choice-h2{margin-top:14pt; margin-bottom:14pt; text-align:center; line-height:115%; widows:0; orphans:0; font-size:26pt;font-family:'华光中雅_CNKI'}
+.type-choice-h2-instruction{margin:14pt 19.95pt 14pt 21.2pt; text-indent:21pt; text-align:justify; line-height:200%; font-size:16pt;font-family:'华光楷体_CNKI'}
+.type-choice-h3{margin:14pt 19.95pt 0pt 60.2pt; text-indent:-21pt; text-align:justify; line-height:200%; font-size:14pt}
+.type-choice-section{margin:14pt 19.95pt 14pt 21.2pt; text-align:center; line-height:200%; widows:0; orphans:0; font-size:14pt}
+
+
+
