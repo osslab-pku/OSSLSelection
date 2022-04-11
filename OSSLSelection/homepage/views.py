@@ -85,7 +85,7 @@ def compatibility_judge(licenseA,licenseB):
 
 # 2、许可证兼容性判断工具页___许可证不次级兼容原因判断
 def license_uncompatibility1_reason(licenseA,licenseB):
-    reason = ''
+    reason = '不能次级兼容的原因是，'
     compatibility_terms = []
     df = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\licenses_terms_58.csv')
     licenseA_terms = df[df['license']==licenseA].to_dict(orient='records')[0]
@@ -117,35 +117,35 @@ def license_uncompatibility1_reason(licenseA,licenseB):
     if licenseB_terms['acceptance'] == 1:
         restrictiveB.add('获得接受者对许可证条款的明确同意')
     if licenseA_terms['copyleft'] == 0 and licenseB_terms['copyleft'] != 0:
-        reason = licenseB + "是限制型开源许可证，如果使用（包括但不限于链接、复制粘贴等方式）了" + licenseA + "授权的作品，要求" + licenseA \
+        reason = reason + licenseB + "是限制型开源许可证，如果使用（包括但不限于链接、复制粘贴等方式）了" + licenseA + "授权的作品，要求" + licenseA \
                  + "授权的作品将受" + licenseB + "的约束，而" + licenseA + "包含如下影响次级兼容的条款（" + licenseB + "中没有此等要求）" +"，使其不能变更为" + licenseB + "授权。"
         compatibility_terms = list(restrictiveA.difference(restrictiveB))
     elif licenseA_terms['copyleft'] == 0 and licenseB_terms['copyleft'] == 0 :
-        reason = licenseA + "和" + licenseB + "都是宽松型开源许可证，但" + licenseA + "包含如下影响次级兼容的条款（" + licenseB + "中没有此等要求）" + "，使其不能变更为" + licenseB + "授权。"
+        reason = reason + licenseA + "和" + licenseB + "都是宽松型开源许可证，但" + licenseA + "包含如下影响次级兼容的条款（" + licenseB + "中没有此等要求）" + "，使其不能变更为" + licenseB + "授权。"
         compatibility_terms = list(restrictiveA.difference(restrictiveB))
     elif licenseA_terms['copyleft'] != 0 and licenseB_terms['copyleft'] != 0:
-        reason = licenseA + "和" + licenseB + "都是限制型开源许可证，它们都包含copyleft的特性，且" + licenseB \
+        reason = reason + licenseA + "和" + licenseB + "都是限制型开源许可证，它们都包含copyleft的特性，且" + licenseB \
                  + "不是" + licenseA +"的兼容后续版本，也不是其兼容次级许可证，使" + licenseA + "无法变更为" +licenseB + \
                  "，进而无法满足" + licenseB + "的copyleft要求。"
     elif licenseA_terms['copyleft'] != 0 and licenseB_terms['copyleft'] == 0:
-        reason = licenseA + "是限制型开源许可证，而" + licenseB + "是宽松型开源许可证，修改或使用（包括但不限于链接、复制粘贴等方式）了" \
+        reason = reason + licenseA + "是限制型开源许可证，而" + licenseB + "是宽松型开源许可证，修改或使用（包括但不限于链接、复制粘贴等方式）了" \
                  + licenseA + "授权的作品，所产生的衍生作品须遵循" + licenseA + "的copyleft要求，无法采用" + licenseB + "授权。"
     return reason,compatibility_terms
 
 # 2、许可证兼容性判断工具页___许可证不组合兼容原因判断
 def license_uncompatibility2_reason(licenseA,licenseB):
-    reason = ''
+    reason = '不能组合兼容的原因是，'
     df = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\licenses_terms_58.csv')
     licenseA_terms = df[df['license'] == licenseA].to_dict(orient='records')[0]
     licenseB_terms = df[df['license'] == licenseB].to_dict(orient='records')[0]
     if licenseA_terms['copyleft'] != 3 and licenseB_terms['copyleft'] == 2 :
-        reason = licenseB + "是库级弱限制型开源许可证，不限制通过接口调用该许可证授权作品的其他作品，但要求其约束部分（包括但不限于其包含的文件、其调用的组件等）都遵循其copyleft特性，若使用（包括但不限于调用、复制粘贴等方式）了" \
+        reason = reason + licenseB + "是库级弱限制型开源许可证，不限制通过接口调用该许可证授权作品的其他作品，但要求其约束部分（包括但不限于其包含的文件、其调用的组件等）都遵循其copyleft特性，若使用（包括但不限于调用、复制粘贴等方式）了" \
                  + licenseA + "授权的作品，" + licenseA + "授权的部分须遵循" + licenseB + "，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
     elif licenseA_terms['copyleft'] != 3 and licenseB_terms['copyleft'] == 3 :
-        reason = licenseB + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，若使用（包括但不限于调用、复制粘贴等方式）了" \
+        reason = reason + licenseB + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，若使用（包括但不限于调用、复制粘贴等方式）了" \
                  + licenseA + "授权的作品，" + licenseA + "授权的部分须遵循" + licenseB + "，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
     elif licenseA_terms['copyleft'] == 3:
-        reason = licenseA + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
+        reason = reason + licenseA + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
     return reason
 
 @register.filter
@@ -644,8 +644,8 @@ def license_trend(request):
     github_languages_count = df['language'].value_counts()
     github_topics = github_topics_count.index.tolist()
     github_topics_10 = github_topics_count.index[:10].tolist()
-    github_languages = github_languages_count[:10].index.tolist()
-    github_languages_10 = github_languages_count[:12].index.tolist()
+    github_languages = github_languages_count.index.tolist()
+    github_languages_10 = github_languages_count[:10].index.tolist()
     df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\license_recommended.csv')
     recommand_licenses = df['license'].tolist()
     return render(request,

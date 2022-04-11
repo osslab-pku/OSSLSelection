@@ -17,13 +17,13 @@
 			<div  class="secondary-title" align="center" style="">
 				<h3>开源许可证兼容性判断</h3>
 			</div>
-			<div class="col-xl-6 col-lg-6">
+			<div class="col-xl-5 col-lg-5">
 				<div style="height:200px;margin:50px 0px 10px 40px;justify-content:center;background-image:url(../static/img/bb.png) no-repeat;">
 					<div class="row justify-items-center" style="height:90px"></div>
 					<div class="row justify-items-center">
 						<div class="col-xl-6 col-lg-6 alert alert-success" role="alert" style="text-align:center">A许可证</div>
 						<div class="col-xl-6 col-lg-6">
-								<select id="A_license" class="btn btn-light" style="width:250px;height:50px;text-align:left">
+								<select id="A_license" class="btn btn-light" style="width:220px;height:50px;text-align:left">
 									{% for license in licenses %}
 										<option value="{{license}}">{{license}}</option>
 									{% endfor %}
@@ -33,7 +33,7 @@
 					<div class="row justify-items-center">
 						<div class="col-xl-6 col-lg-6  alert alert-info" role="alert" style="text-align:center">	B许可证</div>
 						<div class="col-xl-6 col-lg-6">
-							<select id="B_license" class="btn btn-light" style="width:250px;height:50px;text-align:left">
+							<select id="B_license" class="btn btn-light" style="width:220px;height:50px;text-align:left">
 									{% for license in licenses %}
 										<option value="{{license}}">{{license}}</option>
 									{% endfor %}
@@ -42,7 +42,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-6 col-lg-6">
+			<div class="col-xl-7 col-lg-7">
 				<div class="jumbotron jumbotron-fluid" style="margin:0px 5px 0px 15px;padding:15px;">
 					<div style="height:350px;font-size:15px">
 						<div id="compatibility1" style="display:none;margin-bottom:2px;line-height:25px;background:#CCFFCC;"><span><b>兼容结果：</b></span><span id="compatibility_result"></span></div>
@@ -62,10 +62,10 @@
 	</div>
 	<div class="row">
 		<div class="instruction-area" style="margin:20px 0px">
-			<p style="font-size:15px;margin:10px 15px 0px 0px">说明：许可证的兼容性是有方向的。
-				开源许可证A授权的软件经过修改，所产生的衍生软件可以使用开源许可证B重新授权，则A兼容B，原A授权的代码将变更为B授权；
-				开源许可证A授权的软件，可以与开源许可证B授权的软件组合，且组合软件的整体使用开源许可证B授权分发，则A组合兼容B，原A授权的代码仍然遵循A。
-				当开源许可证A不能通过上述两种兼容场景与开源许可证B兼容时，则A不兼容B。</p>
+			<p style="font-size:15px;margin:10px 15px 0px 0px"><b>说明：</b>许可证的兼容性是有方向的。A许可证是指项目中组合的第三方代码所采用的许可证（入站许可证），B许可证是指项目所（预计）采用的许可证（出站许可证）；
+				“A次级兼容B”是指修改或组合开源许可证A授权的软件，所产生的衍生软件整体及部分可采用开源许可证B授权（原A授权的代码可变更为B授权）；
+				“A组合兼容B”是指修改或组合开源许可证A授权的软件，所产生的衍生软件整体可采用开源许可证B授权（原A授权的代码可仍然遵循A约束）。
+				当开源许可证A既不次级兼容也不组合兼容开源许可证B时，则A不兼容B。</p>
 		</div>
 	</div>
 {% endblock %}
