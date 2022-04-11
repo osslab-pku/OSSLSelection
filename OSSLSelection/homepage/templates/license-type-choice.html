@@ -1,56 +1,18 @@
-{% load static %}
-<!DOCTYPE html >
-<html lang="en" class="no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="/static/css/swiper.min.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-	<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-	<script src="/static/js/swiper.min.js"></script>
-	<link rel="stylesheet" href="/static/css/style.css">
-	<link rel="stylesheet" href="/static/css/newstyle.css">
-	<link rel="stylesheet" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-</head>
-<body>
-	<!--=========== Main Header area ===============-->
-	<header id="home">
-		<div class="main-navigation-1">
-			<div class="container">
-				<div class="row">
-					<div class="col-xl-2 col-lg-3 col-md-3" >
-						<div class="logo-area">
-							<a href="index.html"><img src="/static/img/logo.png" alt="enventer"></a>
-						</div>
-					</div>
-					<div class="col-xl-10 col-lg-9 col-md-9">
-						<div class="main-menu f-right" >
-							<nav id="mobile-menu">
-								<ul style="padding:0px;margin:0px;">
-									<li><a  href="{% url 'ossls:index' %}">首页</a></li>
-									<li>
-										<a href="#" onclick="return false">工具<i class="fas fa-angle-down"></i></a>
-										<ul class="dropdown">
-											<li><a href="{% url 'ossls:license_compatibility' %}">开源许可证兼容性判断</a></li>
-											<li><a href="{% url 'ossls:license_selection' %}">开源许可证选择</a></li>
-											<li><a href="{% url 'ossls:license_trend' %}">趋势一览</a></li>
-										</ul>
-									</li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
+{% extends 'ossls_base.html' %}
 
+
+{% block extraCSS %}
+	<link rel="stylesheet" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+	<link rel="stylesheet" href="/static/css/swiper.min.css">
+	<script src="/static/js/swiper.min.js"></script>
+{% endblock %}
+
+
+{% block body %}
 	<section class="sec1">
 		<div class="main">
 			<div>
-				<div class="title" style="margin-bottom:20px;margin-top:70px;">如何选择开源许可证类型？</div>
-				<div align="center" style="font-size:19px;color:#666;padding-bottom:30px;border-bottom:1px solid #ddd;">本工具从个人开源风格、开源商业模式、项目社区发展的角度分析，项目应该选择一个限制型(互惠)开源许可证还是一个宽松型开源许可证？</div>
+				<div align="center" style="font-size:19px;color:#666;padding-bottom:30px;border-bottom:1px solid #ddd;">本工具从个人开源风格、开源商业模式、项目社区发展的角度分析如何选择开源许可证类型。</div>
 			</div>
 			<div class="title" style="margin-top:40px;margin-bottom:20px;">个人开源风格</div>
 			<div align="center" style="font-size:19px;color:#666;padding-bottom:50px;border-bottom:1px solid #ddd;">个人开源风格体现了开发者如何看待开源软件的使用。</div>
@@ -58,10 +20,10 @@
 				<div class="swiper-wrapper">
 					<div class="swiper-slide">
 						<div class="news-item"><a href="#" class="clearfix">
-							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/business.jpeg"></div></div>
+							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/opensource2.jpeg"></div></div>
 							<div class="news-text">
-								<div class="date">
-									<div class="year">Tip 1</div>
+								<div class="tip">
+									<div class="tip-h">Tip 1</div>
 								</div>
 								<div class="news-h">支持持续共享</div>
 								<div class="news-sum">限制型开源许可证允许用户自由地使用、复制、修改和分发软件，但重新分发修改后的衍生软件通常须要在相同的开源许可证（或其兼容的开源许可证）下授权，以确保软件的持续开源。</div>
@@ -70,10 +32,10 @@
 					</div>
 					<div class="swiper-slide">
 						<div class="news-item"><a href="#" class="clearfix">
-							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/business.jpeg"></div></div>
+							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/opensource2.jpeg"></div></div>
 							<div class="news-text">
-								<div class="date">
-									<div class="year">Tip 2</div>
+								<div class="tip">
+									<div class="tip-h">Tip 2</div>
 								</div>
 								<div class="news-h">支持用户权利</div>
 								<div class="news-sum">宽松型开源许可证允许用户自由地使用、复制、修改和分发软件，且重新分发修改后的软件允许用户重新选择许可方式，甚至闭源，用户拥有更多的自主权。</div></div>
@@ -81,10 +43,10 @@
 					</div>
 					<div class="swiper-slide">
 						<div class="news-item"><a href="#" class="clearfix">
-							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/business.jpeg"></div></div>
+							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/opensource2.jpeg"></div></div>
 							<div class="news-text">
-								<div class="date">
-									<div class="year">Tip 3</div>
+								<div class="tip">
+									<div class="tip-h">Tip 3</div>
 								</div>
 								<div class="news-h">投入公共领域</div>
 								<div class="news-sum">将软件放置公共领域，意味着作者放弃对软件的版权保护，任何人都可以无偿地使用和修改，甚至可以删除作者的名字视为其自己的作品。</div>
@@ -104,15 +66,15 @@
 	<section class="sec1">
 		<div class="main">
 			<div class="title" style="margin-bottom:20px;">开源商业模式</div>
-			<div style="font-size:19px;color:#666;padding-bottom:50px;border-bottom:1px solid #ddd;">尽管开源是一种优越的开发模式，但也不能保证每一个软件都能通过开源商业模式赚取足够的利益。开源许可证是开源软件的主要法律工具， 错误的选择可能会导致收入的损失，甚至失去对软件开发的控制。</div>
+			<div style="font-size:19px;color:#666;padding-bottom:50px;border-bottom:1px solid #ddd;text-indent:32pt;">尽管开源是一种优越的开发模式，但也不能保证每一个软件都能通过<a href="{% url 'ossls:business_model' %}" target="_blank" style="color:blue">开源商业模式</a>赚取足够的利益。开源许可证是开源软件的主要法律工具， 错误的选择可能会导致收入的损失，甚至失去对软件开发的控制。</div>
 			<div class="w-newsList w-newsList1 clearfix" id="newsList2">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide">
 						<div class="news-item"><a href="#" class="clearfix">
 							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/business_model.jpeg"></div></div>
 							<div class="news-text">
-								<div class="date">
-									<div class="year">Tip 1</div>
+								<div class="tip">
+									<div class="tip-h">Tip 1</div>
 								</div>
 								<div class="news-h">扩大用户基础</div>
 								<div class="news-sum">支持服务、开放核心等商业模式的业务需求依赖于广泛的用户基础， 宽松型开源许可证和限制型开源许可证的主要区别在于，宽松型开源许可证允许用户在自己的产品中集成开源代码，而不必将代码开源，因此宽松型开源许可证对于商业用户比较友好。尤其是当您希望人们将您的软件用于商业物联网时， 那么您最好不要选择GPL-3.0(或其变体)，因为由于其关于安装信息的条款，大多数用户不会采用它。</div>
@@ -123,8 +85,8 @@
 						<div class="news-item"><a href="#" class="clearfix">
 							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/business_model.jpeg"></div></div>
 							<div class="news-text">
-								<div class="date">
-									<div class="year">Tip 2</div>
+								<div class="tip">
+									<div class="tip-h">Tip 2</div>
 								</div>
 								<div class="news-h">减少同行竞争</div>
 								<div class="news-sum">软件的源代码始终是软件厂商的核心价值之一，分叉(Fork)虽然可以鼓励创新， 但也会带来开发者的分裂出走以及潜在竞争，限制型开源许可证对于衍生软件的发布要求不同程度的开放自己的源代码，一定程度较少了竞争对手利用开源软件制作私有产品的机会，从而减少同行竞争。</div></div>
@@ -134,8 +96,8 @@
 						<div class="news-item"><a href="#" class="clearfix">
 							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/business_model.jpeg"></div></div>
 							<div class="news-text">
-								<div class="date">
-									<div class="year">Tip 3</div>
+								<div class="tip">
+									<div class="tip-h">Tip 3</div>
 								</div>
 								<div class="news-h">控制产品开发</div>
 								<div class="news-sum">如何有效控制软件发展方向，对于开源厂商具有战略意义，限制型开源许可证可以减少代码分叉，且所有开发的内容都可以保留下来，有助于掌握软件开发的动向；开源厂商还可以通过参与开源软件的决策如成为PMC）或者签订额外协议（如CLA）来获得对软件的足够控制。</div>
@@ -155,15 +117,15 @@
 	<section class="sec1">
 		<div class="main">
 			<div class="title" style="margin-bottom:20px;">项目社区发展</div>
-			<div style="font-size:19px;color:#666;padding-bottom:50px;border-bottom:1px solid #ddd;">开源许可证作为一种法律机制和激励机制，是社区合作建立的基础，许可证的选择可能会影响社区的参与和贡献，不同开源项目中的不同利益相关者对许可证条款和条件的理解也不同， 当一个开源项目在某些条件下采用某个特定的开放源码许可证时，这样的选择可能会被一些个人和公司所喜欢，而另一部分人可能不喜欢，因此它们决定不参与和贡献这个特定项目，继而对它的未来发展和它的社区产生影响。对于那些希望建立自己社区的项目来说，吸引什么样的社区是需要考虑的问题，通常来说，在开发阶段，与社区合作编写和改进软件代码是主要目标，而在发布阶段，主要目的是扩大软件的用户基础， 产生积极的网络效应。</div>
+			<div style="font-size:19px;color:#666;padding-bottom:50px;border-bottom:1px solid #ddd;text-indent:32pt;">开源许可证作为一种法律机制和激励机制，是社区合作建立的基础，许可证的选择可能会影响社区的参与和贡献，不同开源项目中的不同利益相关者对许可证条款和条件的理解也不同， 当一个开源项目在某些条件下采用某个特定的开放源码许可证时，这样的选择可能会被一些个人和公司所喜欢，而另一部分人可能不喜欢，因此它们决定不参与和贡献这个特定项目，继而对它的未来发展和它的社区产生影响。对于那些希望建立自己社区的项目来说，吸引什么样的社区是需要考虑的问题，通常来说，在开发阶段，与社区合作编写和改进软件代码是主要目标，而在发布阶段，主要目的是扩大软件的用户基础， 产生积极的网络效应。</div>
 			<div class="w-newsList w-newsList1 clearfix" id="newsList3">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide">
 						<div class="news-item"><a href="#" class="clearfix">
 							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/opensource1.jpeg"></div></div>
 							<div class="news-text">
-								<div class="date">
-									<div class="year">Tip 1</div>
+								<div class="tip">
+									<div class="tip-h">Tip 1</div>
 								</div>
 								<div class="news-h">用户</div>
 								<div class="news-sum">开源软件获得潜在价值的一种方式是让其他程序依赖它，即在其他软件产品中的累积改进和集成，开源软件被广泛采用不仅可以帮助扩大用户群体，还可以带来经济机会和声誉的提高。 软件类型及其采用的开源许可证类型影响它的重用，软件栈中位置较高的程序依赖于位置较低的程序的功能，而开源许可证决定了一个程序可以做什么，以及它是否可以和其他程序组合，宽松型开源许可证允许用户高度自由地使用和重用代码， 允许选择下游许可证（sublicense），对任何用户来说，都没有压力，而开源许可证的互惠性越强，从衍生产品中生产专有产品就越困难，降低了对那些想要制作专有衍生软件的商业用户的吸引力， 有研究表明具有高商业价值的软件项目更有可能在非限制性许可下发布。</div>
@@ -174,12 +136,12 @@
 						<div class="news-item"><a href="#" class="clearfix">
 							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/opensource1.jpeg"></div></div>
 							<div class="news-text">
-								<div class="date">
-									<div class="year">Tip 2</div>
+								<div class="tip">
+									<div class="tip-h">Tip 2</div>
 								</div>
 								<div class="news-h">贡献者</div>
-								<div class="news-sum">开源软件项目依赖于开发人员的持续贡献以维持大规模开发和稳定增长，OSS开发人员在完全自愿、非契约、非委托的基础上工作，动机被认为在他们的行为中扮演着重要的角色。</br>具有内在动机的贡献者。
-											他们出于工作挑战、同行的认可等内在激励参与开源项目，通常更喜欢适度的限制，且限制型许可证使软件保持开放的特性，能吸引具有“自由软件”理念的贡献者。</br>具有外在动机的贡献者。
+								<div class="news-sum">开源软件项目依赖于开发人员的持续贡献以维持大规模开发和稳定增长，OSS开发人员在完全自愿、非契约、非委托的基础上工作，动机被认为在他们的行为中扮演着重要的角色。</br><b>· 具有内在动机的贡献者。</b>
+											他们出于工作挑战、同行的认可等内在激励参与开源项目，通常更喜欢适度的限制，且限制型许可证使软件保持开放的特性，能吸引具有“自由软件”理念的贡献者。</br><b>· 具有外在动机的贡献者。</b>
 											这一类贡献者参与开源项目,不仅出于内在激励，还希望获得商业化潜在机会、声誉和地位等外在激励，宽松型开源许可证对商业用户友好，且较高的用户数量也能使得他们的技能得到更好的展示。</div>
 							</div>
 						</a></div>
@@ -188,8 +150,8 @@
 						<div class="news-item"><a href="#" class="clearfix">
 							<div class="news-imgbox img-count"><div class="aspectRatio"></div><div class="img-count-in"><img src="/static/img/opensource1.jpeg"></div></div>
 							<div class="news-text">
-								<div class="date">
-									<div class="year">Tip 3</div>
+								<div class="tip">
+									<div class="tip-h">Tip 3</div>
 								</div>
 								<div class="news-h">合作伙伴或竞争对手</div>
 								<div class="news-sum">开源许可证是获得此类潜在成员信任的主要工具，限制型开源许可证可以向此类贡献者提供某种保证，以确保他们(经常)没有报酬的工作会保持开放，不会被直接商业利用， 而在非限制性许可下，开发人员知道，他们可能需要为将来使用最终软件付出一定的代价。例如，一些研究表明嵌入式系统领域的公司可能更喜欢参与在GPL下提供软件的开源项目， 一些企业选择GPL类开源许可证来吸引合作伙伴或竞争对手对项目产生兴趣，还有一些软件公司用来激励员工的一个有趣的举动是，在雇佣合同中保证他们为公司生产的所有软件都将在开源许可证下发布。</div>
@@ -205,11 +167,9 @@
 			</div>
 		</div>
 	</section>
+{% endblock%}
 
-	<footer style="height:68px;padding:20px">
-		<p>All rights reserved @ blesswoo 2021</p>
-	</footer>
-
+{% block extraJS %}
 	<script type="text/javascript">
 		$(function(){
 			/*图片位置计算*/
@@ -326,9 +286,4 @@
 			});
 		});
 	</script>
-</body>
-</html>
-<!--尽管开源是一种优越的开发模式，但也不能保证每一个软件都能通过开源商业模式赚取足够的利益。开源许可证是开源软件的主要法律工具， 错误的选择可能会导致收入的损失，甚至失去对软件开发的控制。-->
-<!--开源许可证作为一种法律机制和激励机制，是社区合作建立的基础，许可证的选择可能会影响社区的参与和贡献，不同开源项目中的不同利益相关者对许可证条款和条件的理解也不同， 当一个开源项目在某些条件下采用某个特定的开放源码许可证时，这样的选择可能会被一些个人和公司所喜欢，而另一部分人可能不喜欢，因此它们决定不参与和贡献这个特定项目，继而对它的未来发展和它的社区产生影响。
-
-对于那些希望建立自己社区的项目来说，吸引什么样的社区是需要考虑的问题，通常来说，在开发阶段，与社区合作编写和改进软件代码是主要目标，而在发布阶段，主要目的是扩大软件的用户基础， 产生积极的网络效应。-->
+{% endblock %}

@@ -1,12 +1,13 @@
 {% load static %}
 <!doctype html>
+
 <html lang="en" class="no-js">
 
 <head>
 	<title>OSSLS--Open Source Software License Selection</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name=description content="">
 	<meta name=author content="Enventer">
 	<link rel="icon" href="/static/img/favicon.png" type="image/png">
@@ -24,12 +25,11 @@
 	<link href="/static/css/slick.css" rel="stylesheet">
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="/static/css/style.css">
-	<link rel="stylesheet" href="/static/css/responsive.css">
-
+<!--	<link rel="stylesheet" href="/static/css/responsive.css">-->
 	{% block extraCSS %}{% endblock %}
 </head>
 
-<body style="">
+<body>
 	<!--[if lt IE 8]>
 	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
@@ -76,6 +76,8 @@
 		</div>
 	</header>
 
+
+
 	<div class="team-area">
 		{% block beforebody %}
 
@@ -91,7 +93,7 @@
 
 	<!-- =========Footer Area=========== -->
 	<!--copyright-->
-	<footer>
+	<footer style="height:60px;padding-top:15px">
 		<p>All rights reserved @ blesswoo 2021</p>
 	</footer>
 
