@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="/static/css/bootstrap-select.css">
 	<link rel="stylesheet" href="/static/css/tab.css">
 	<link rel="stylesheet" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<!--	<link rel="stylesheet" href="/static/css/bootstrap.min.css">-->
 	<!--[if IE]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -45,7 +46,7 @@
 							<img id="thirdImg" style=" width: 250px;height: 34px;margin:0px 0px 0 0px;" src="/static/img/step2.png"/>
 							<div style="position:absolute;z-indent:2;left:70px;top:0;">
 								<span id="thirdText" style="width: 71px;height: 14px;font-size: 16px;line-height: 32px;letter-spacing: 3px;color: #999999;">
-								3 &nbsp;细节对比
+								3 &nbsp;要素对比
 							</span>
 							</div>
 						</div>
@@ -113,9 +114,9 @@
 							</p>
 						</div>
 						<div class="radio-area">
-							<div><label><input name="question1" type="radio" value="宽松型开源许可证" />A、支持，宽松型开源许可证</label></div>
-							<div><label><input name="question1" type="radio" value="限制型开源许可证" />B、不支持，限制型开源许可证</label></div>
-							<div><label><input name="question1" type="radio" value="公共领域许可证" />C、无所谓，将作品放置公共领域</label></div>
+							<div><label><input name="question1" type="radio" style="outline:none" value="宽松型开源许可证" />A、支持，宽松型开源许可证</label></div>
+							<div><label><input name="question1" type="radio" style="outline:none" value="限制型开源许可证" />B、不支持，限制型开源许可证</label></div>
+							<div><label><input name="question1" type="radio" style="outline:none" value="公共领域许可证" />C、无所谓，将作品放置公共领域</label></div>
 						</div>
 					</div>
 					<div id="license_question2" class="terms_question_area" style="display:none;">
@@ -123,9 +124,9 @@
 						<div><p class="instruction-font">说明：开源许可证的”限制性“条款也称”copyleft条款“。<b>“强限制型”</b>许可证要求对软件的修改和扩展后的分发都必须按照获得该软件的许可证进行开源，如GPL2.0；<b>“弱限制型”</b>许可证要求对软件修改后的重新分发必须按照获得该软件的许可证进行授权，
 									但允许将代码集成到自己的软件中，而不必使整个代码库开源，合并这些软件的大型作品可以成为私有作品，<b>”文件级/模块级/库级“</b>是指许可证的copyleft范围，如MPL-2.0是弱限制型开源许可证，只要专有代码与MPL-2.0授权代码位于不同文件，即可隔离传染等。</p></div>
 						<div class="radio-area">
-							<div><label><input name="question2" type="radio" value="文件级__弱限制型开源许可证" />A、文件级__弱限制型开源许可证</label></div>
-							<div><label><input name="question2" type="radio" value="模块级__弱限制型开源许可证" />B、模块级__弱限制型开源许可证</label></div>
-							<div><label><input name="question2" type="radio" value="强限制型开源许可证" />C、强限制型开源许可证</label></div>
+							<div><label><input name="question2" type="radio" style="outline:none" value="文件级__弱限制型开源许可证" />A、文件级__弱限制型开源许可证</label></div>
+							<div><label><input name="question2" type="radio" style="outline:none" value="模块级__弱限制型开源许可证" />B、模块级__弱限制型开源许可证</label></div>
+							<div><label><input name="question2" type="radio" style="outline:none" value="强限制型开源许可证" />C、强限制型开源许可证</label></div>
 						</div>
 					</div>
 					<div id="license_question3" class="terms_question_area" style="display:none;">
@@ -134,9 +135,9 @@
 							尽管这可能并不意味着它们不授予专利权（即默示授予专利），然而明确的专利授权有利于保护开源软件的用户免受专利诉讼，尤其是面向一些拥有大量专利组合和其他专利组合风险的企业用户，
 							他们普遍很重视专利权的明确授予。</p></div>
 						<div class="radio-area">
-							<div><label><input name="question3" type="radio" value="不提及专利权" />A、不提及专利权</label></div>
-							<div><label><input name="question3" type="radio" value="明确授予专利权" />B、明确授予专利权</label></div>
-							<div><label><input name="question3" type="radio" value="明确不授予专利权" />C、明确不授予专利权</label></div>
+							<div><label><input name="question3" type="radio" style="outline:none" value="不提及专利权" />A、不提及专利权</label></div>
+							<div><label><input name="question3" type="radio" style="outline:none" value="明确授予专利权" />B、明确授予专利权</label></div>
+							<div><label><input name="question3" type="radio" style="outline:none" value="明确不授予专利权" />C、明确不授予专利权</label></div>
 						</div>
 					</div>
 					<div id="license_question4" class="terms_question_area" style="display:none;">
@@ -144,8 +145,8 @@
 						<div><p class="instruction-font">说明：“反专利诉讼”是指任何提起“声称被许可方侵犯了其在许可作品中的专利权”等此类法律诉讼的人，将失去已经授予其在该许可证中的权利。
 							“反专利诉讼”的目的是阻止人们提起关于许可作品的专利诉讼，保护开源软件的用户规避陷入专利诉讼的风险。</p></div>
 						<div class="radio-area">
-							<div><label><input name="question4" type="radio" value="包含反专利诉讼条款" />A、包含反专利诉讼条款</label></div>
-							<div><label><input name="question4" type="radio" value="不包含反专利诉讼条款" />B、不包含反专利诉讼条款</label></div>
+							<div><label><input name="question4" type="radio" style="outline:none" value="包含反专利诉讼条款" />A、包含反专利诉讼条款</label></div>
+							<div><label><input name="question4" type="radio" style="outline:none" value="不包含反专利诉讼条款" />B、不包含反专利诉讼条款</label></div>
 						</div>
 					</div>
 					<div id="license_question5" class="terms_question_area" style="display:none;">
@@ -155,8 +156,8 @@
 							明确“不授予商标权”有利于保护您的商标合法权益，然而早期出现的一些流行使用的开源许可证可能没有明确包含此条款，例如MIT、BSD-2-Clause、GPL-2.0、GPL-3.0等，
 							您也可以通过附加条款、签署其他协议等方式来明确对商标权的限制。</p></div>
 						<div class="radio-area">
-							<div><label><input name="question5" type="radio" value="不提及商标权" />A、不提及商标权</label></div>
-							<div><label><input name="question5" type="radio" value="明确不授予商标权" />B、明确不授予商标权</label></div>
+							<div><label><input name="question5" type="radio" style="outline:none" value="不提及商标权" />A、不提及商标权</label></div>
+							<div><label><input name="question5" type="radio" style="outline:none" value="明确不授予商标权" />B、明确不授予商标权</label></div>
 						</div>
 					</div>
 					<div id="license_question6" class="terms_question_area" style="display:none;">
@@ -165,8 +166,8 @@
 									”网络交互视为分发“是指用户使用开源软件或其衍生软件进行”网络交互“，须按照获得该软件的许可证授权并分发其源代码，
 									例如在云中使用AGPL-3.0授权的软件提供在线服务也须要发布其源代码。</p></div>
 						<div class="radio-area">
-							<div><label><input name="question6" type="radio" value="网络部署视为分发" />A、网络交互视为分发</label></div>
-							<div><label><input name="question6" type="radio" value="网络部署不视为分发" />B、网络交互不视为分发</label></div>
+							<div><label><input name="question6" type="radio" style="outline:none" value="网络部署视为分发" />A、网络交互视为分发</label></div>
+							<div><label><input name="question6" type="radio" style="outline:none" value="网络部署不视为分发" />B、网络交互不视为分发</label></div>
 						</div>
 					</div>
 					<div id="license_question7" class="terms_question_area" style="display:none;">
@@ -174,8 +175,8 @@
 						<div><p class="instruction-font">说明：“修改说明”是指要求用户在分发其修改后的软件（衍生软件）时，必须标记修改内容、日期、修改作者等信息。
 							“修改说明”有利于增强开源软件贡献者的可见性和软件的可维护性；然而，用户可能因为疏忽导致许可证违规；且该条款的存在与否将影响开源许可证的兼容性。</p></div>
 						<div class="radio-area">
-							<div><label><input name="question7" type="radio" value="包含修改说明条款" />A、是，包含”修改说明“</label></div>
-							<div><label><input name="question7" type="radio" value="不包含修改说明条款" />B、否，不包含“修改说明”</label></div>
+							<div><label><input name="question7" type="radio" style="outline:none" value="包含修改说明条款" />A、是，包含”修改说明“</label></div>
+							<div><label><input name="question7" type="radio" style="outline:none" value="不包含修改说明条款" />B、否，不包含“修改说明”</label></div>
 						</div>
 					</div>
 				</div>
@@ -201,11 +202,11 @@
 				</div>
 				<div style="height:375px;">
 					<div class="dropdown-button" align="center" >
-						<select id="sort_selection" class="selectpicker show-tick" data-width="98%">
-							<option value="popular_desc" selected="selected">按流行度↓</option>
-							<option value="popular_asc">按流行度↑</option>
-							<option value="complex_desc">按可读性↓</option>
-							<option value="complex_asc">按可读性↑</option>
+						<select id="sort_selection" class="selectpicker show-tick"  data-width="98%">
+							<option value="popular_desc" style="outline:none" selected="selected">按流行度↓</option>
+							<option value="popular_asc" style="outline:none">按流行度↑</option>
+							<option value="complex_desc" style="outline:none">按可读性↓</option>
+							<option value="complex_asc" style="outline:none">按可读性↑</option>
 						</select>
 					</div>
 					<div class="recommand-license" align="left">
@@ -556,7 +557,7 @@
 						$("#in_license_box").show();
 						for(var i = 0; i <result['in_licenses'].length; i++){
 							if(result['checked_list'].includes(result['in_licenses'][i])){
-								$("#in_licenses").append("<li class='recommand-license-li'><svg xmlns='http://www.w3.org/2000/svg' width='30' height='15' fill='currentColor' class='bi bi-check-circle text-primary' viewBox='0 0 16 16'>  <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>  <path d='M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z'/></svg>"+result['in_licenses'][i]+"</li>");
+								$("#in_licenses").append("<li class='recommand-license-li'><svg xmlns='http://www.w3.org/2000/svg' width='30' height='15' fill='currentColor' class='bi bi-check-circle color-both' viewBox='0 0 16 16'>  <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>  <path d='M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z'/></svg>"+result['in_licenses'][i]+"</li>");
 							}
 							else{
 								$("#in_licenses").append("<li class='recommand-license-li'><svg xmlns='http://www.w3.org/2000/svg' width='30' height='15' fill='currentColor' class='bi bi-exclamation-circle' viewBox='0 0 16 16'>  <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>  <path d='M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z'/></svg>"+result['in_licenses'][i]+"</li>");
@@ -572,9 +573,9 @@
 						});
 						$("#licenselist_recommended").find("li").remove();
 						for (var i = 0; i < result["licenselist_recommended"].length; i++){
-							if(result["compatible_secondary_list"].includes(result["licenselist_recommended"][i])) {$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill text-success' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");	green_license.push(result["licenselist_recommended"][i]);black_license.pop(result["licenselist_recommended"][i]);}
-							else if(result["compatible_combine_list"].includes(result["licenselist_recommended"][i])) {$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill text-warning' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");	yellow_license.push(result["licenselist_recommended"][i]);black_license.pop(result["licenselist_recommended"][i]);}
-							else if(result["compatible_both_list"].includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill text-primary' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");blue_license.push(result["licenselist_recommended"][i]);black_license.pop(result["licenselist_recommended"][i]);}
+							if(result["compatible_secondary_list"].includes(result["licenselist_recommended"][i])) {$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill color-secondary' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");	green_license.push(result["licenselist_recommended"][i]);black_license.pop(result["licenselist_recommended"][i]);}
+							else if(result["compatible_combine_list"].includes(result["licenselist_recommended"][i])) {$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill color-compatibility' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");	yellow_license.push(result["licenselist_recommended"][i]);black_license.pop(result["licenselist_recommended"][i]);}
+							else if(result["compatible_both_list"].includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill color-both' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");blue_license.push(result["licenselist_recommended"][i]);black_license.pop(result["licenselist_recommended"][i]);}
 						}
 						$("#licenselist_recommended").show()
 						clearInterval(sitv);
@@ -613,9 +614,9 @@
 						q2_show = result["q2_show"]
 						$("#licenselist_recommended").find("li").remove();
 						for (var i = 0; i < result["licenselist_recommended"].length; i++){
-							if(yellow_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill text-warning' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
-							else if(green_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill text-success' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
-							else if(blue_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill text-primary' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
+							if(yellow_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill color-compatibility' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
+							else if(green_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill color-secondary' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
+							else if(blue_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill color-both' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
 							else if(black_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle' viewBox='0 0 16 16'><path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
 						}
 						$("#terms_choice").find("a").remove();
@@ -767,9 +768,9 @@
 						q2_show = result["q2_show"]
 						$("#licenselist_recommended").find("li").remove();
 						for (var i = 0; i < result["licenselist_recommended"].length; i++){
-							if(yellow_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill text-warning' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
-							else if(green_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill text-success' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
-							else if(blue_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill text-primary' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
+							if(yellow_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill color-compatibility' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
+							else if(green_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill color-secondary' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
+							else if(blue_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle-fill color-both' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
 							else if(black_license.includes(result["licenselist_recommended"][i])){$("#licenselist_recommended").append("<li class='recommand-license-li' value=0><svg xmlns='http://www.w3.org/2000/svg' width='30' height='14' fill='currentColor' class='bi bi-circle' viewBox='0 0 16 16'><path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/></svg>" + result["licenselist_recommended"][i] + "</li>");}
 						}
 						$("#terms_choice").find("a").remove();

@@ -47,9 +47,7 @@ select.selectpicker {
   width: 220px;
 }
 .bootstrap-select .dropdown-toggle:focus {
-  outline: thin dotted #333333 !important;
-  outline: 5px auto -webkit-focus-ring-color !important;
-  outline-offset: -2px;
+  outline:none;
 }
 .bootstrap-select.form-control {
   margin-bottom: 0;
@@ -77,6 +75,7 @@ select.selectpicker {
 .form-horizontal .bootstrap-select.btn-group,
 .form-group .bootstrap-select.btn-group {
   margin-bottom: 0;
+  outline:none;
 }
 .form-group-lg .bootstrap-select.btn-group.form-control,
 .form-group-sm .bootstrap-select.btn-group.form-control {

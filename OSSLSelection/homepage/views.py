@@ -30,7 +30,7 @@ def license_compatibility(request):
     judge_licenses = df.index.tolist()
     return render(request,
                   'homepage/templates/license-compatibility.html',
-                  {'licenses':judge_licenses,},)
+                  {'licenses':sorted(judge_licenses),},)
 
 # 2、许可证兼容性判断工具页___许可证兼容性判断结果
 def license_compatibility_judge(request):
@@ -145,7 +145,7 @@ def license_uncompatibility2_reason(licenseA,licenseB):
         reason = licenseB + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，若使用（包括但不限于调用、复制粘贴等方式）了" \
                  + licenseA + "授权的作品，" + licenseA + "授权的部分须遵循" + licenseB + "，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
     elif licenseA_terms['copyleft'] == 3:
-        reason = licenseA + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
+        reason = licenseA + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
     return reason
 
 @register.filter

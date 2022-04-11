@@ -23,7 +23,7 @@
 					<div class="row justify-items-center">
 						<div class="col-xl-6 col-lg-6 alert alert-success" role="alert" style="text-align:center">A许可证</div>
 						<div class="col-xl-6 col-lg-6">
-								<select id="A_license" class="btn btn-light" style="width:250px;height:50px;text-align:center">
+								<select id="A_license" class="btn btn-light" style="width:250px;height:50px;text-align:left">
 									{% for license in licenses %}
 										<option value="{{license}}">{{license}}</option>
 									{% endfor %}
@@ -33,7 +33,7 @@
 					<div class="row justify-items-center">
 						<div class="col-xl-6 col-lg-6  alert alert-info" role="alert" style="text-align:center">	B许可证</div>
 						<div class="col-xl-6 col-lg-6">
-							<select id="B_license" class="btn btn-light" style="width:250px;height:50px;text-align:center">
+							<select id="B_license" class="btn btn-light" style="width:250px;height:50px;text-align:left">
 									{% for license in licenses %}
 										<option value="{{license}}">{{license}}</option>
 									{% endfor %}
@@ -44,7 +44,7 @@
 			</div>
 			<div class="col-xl-6 col-lg-6">
 				<div class="jumbotron jumbotron-fluid" style="margin:0px 5px 0px 15px;padding:15px;">
-					<div style="height:365px;font-size:15px">
+					<div style="height:350px;font-size:15px">
 						<div id="compatibility1" style="display:none;margin-bottom:2px;line-height:25px;background:#CCFFCC;"><span><b>兼容结果：</b></span><span id="compatibility_result"></span></div>
 						<div id="compatibility2" style="display:none;margin-bottom:2px;line-height:25px;background:#CCFFFF;"><span><b>如何使用：</b></span><span id="how_to_use"></span></div>
 						<div id="compatibility3" style="display:none;margin-bottom:2px;line-height:25px;background:#FFFFCC;"><span><b>原因分析：</b></span><span id="why_or_why_not"></span></div>
