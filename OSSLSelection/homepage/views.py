@@ -26,7 +26,7 @@ def index(request):
 
 # 2、许可证兼容性判断工具页
 def license_compatibility(request):
-    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\compatibility_58.csv', index_col=0)
+    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\compatibility_63.csv', index_col=0)
     judge_licenses = df.index.tolist()
     return render(request,
                   'homepage/templates/license-compatibility.html',
@@ -79,7 +79,7 @@ def license_compatibility_judge(request):
 
 # 2、许可证兼容性判断
 def compatibility_judge(licenseA,licenseB):
-    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\compatibility_58.csv', index_col=0)
+    df = pd.read_csv('E:\\OSSLSelection\\OSSLSelection\\homepage\\compatibility_63.csv', index_col=0)
     compatibility_result = str(df.loc[licenseA, licenseB])
     return compatibility_result
 
@@ -209,13 +209,14 @@ def license_check(request):
         else:
             return JsonResponse({"in_licenses": "error2",})
         num_progress = 100
+        show_in_licenses, checked_list, compatible_licenses, compatible_both_list, compatible_secondary_list, compatible_combine_list, dual_no_checked = license_compatibility_filter(in_licenses)
         dependencies = depend_detection(temp_path)
-        confilct_copyleft_dir, confilct_depend_dict= conflict_dection(results,dependencies)
-        json_list = tree_json(Path(temp_path),results,confilct_copyleft_dir,confilct_depend_dict,pi=0,fi=0,json_list=[])
+        confilct_copyleft_list, confilct_depend_dict = conflict_dection(results, dependencies,checked_list)
+        json_list = tree_json(Path(temp_path), results,confilct_depend_dict, pi=0,
+                              json_list=[])
         shutil.rmtree("E:\\oss_license_selection_analyze\\temp_files\\")
-        in_licenses, checked_list, compatible_licenses, compatible_both_list, compatible_secondary_list, compatible_combine_list = license_compatibility_filter(in_licenses)
         num_progress = 1
-        return JsonResponse({"in_licenses": in_licenses,
+        return JsonResponse({"in_licenses": show_in_licenses,
                              'checked_list':checked_list,
                              'licenselist_recommended':compatible_licenses,
                              'compatible_both_list': compatible_both_list,
@@ -223,6 +224,8 @@ def license_check(request):
                              'compatible_combine_list': compatible_combine_list,
                              "files_license_detail": results,
                              "json_list":json_list,
+                             "dual_no_checked":dual_no_checked,
+                             "conflict_copyleft_list":confilct_copyleft_list,
                              })
 
 # 3、许可证选择工具页__许可证识别__显示进度
@@ -241,26 +244,26 @@ def show_files(pathname, files_path):
     return files_path
 
 # 3、许可证选择工具页__许可证识别__文件树标记
-def tree_json(pathname,results, confilct_copyleft_dict, confilct_depend_dict, pi,fi,json_list):
+file_dir_id = 0
+def tree_json(pathname,results, confilct_depend_dict, pi,json_list):
     file_path = str(pathname.parent) + '\\' + pathname.name
+    global file_dir_id
     if pathname.is_file():
+        file_dir_id += 1
         if file_path in results:
             file_name = pathname.name + '-' * (150 - len(str(pathname.name)) - len(str(results[file_path]))) + str(results[file_path])
         else:
             file_name = pathname.name
         if file_path in confilct_depend_dict.keys():
-            json_list.append({"id":fi,"Pid":pi,"name":file_name,"t":confilct_depend_dict[file_path],"font":{'color':'red'}})
+            json_list.append({"id":file_dir_id,"Pid":pi,"name":file_name,"t":confilct_depend_dict[file_path],"font":{'color':'red'}})
         else:
-            json_list.append({"id": fi, "Pid": pi, "name": file_name,"t":'ok'})
+            json_list.append({"id": file_dir_id, "Pid": pi, "name": file_name,"t":'ok'})
     elif pathname.is_dir():
-        if file_path in confilct_copyleft_dict.keys():
-            json_list.append({"id": fi, "Pid": pi, "name": pathname.name, "open": 'true',"t":confilct_copyleft_dict[file_path],"font":{'color':'red'}})
-        else:
-            json_list.append({"id": fi, "Pid": pi, "name": pathname.name, "open": 'true'})
-        pi = fi
+        file_dir_id += 1
+        json_list.append({"id": file_dir_id, "Pid": pi, "name": pathname.name, "open": 'true'})
+        pi = file_dir_id
         for cp in pathname.iterdir():
-            fi += 1
-            tree_json(cp,results, confilct_copyleft_dict, confilct_depend_dict, pi,fi,json_list)
+            tree_json(cp,results, confilct_depend_dict, pi,json_list)
     return json_list
 
 
@@ -319,51 +322,84 @@ def depend_detection(src_path):
                     src_file = file_path_list[src_index]
                     dest_file = file_path_list[dest_index]
                     dependencies[dest_file] = src_file
+    print("依赖识别完成………………")
     return dependencies
 
 # 3、许可证选择工具页__依赖识别__冲突检测
-def conflict_dection(results,dependencies):
+def conflict_dection(file_license_results,dependencies,checked_license_list):
     temp_path = "E:\\oss_license_selection_analyze\\temp_files\\zziprar"
-    df1 = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\compatibility_58.csv', index_col=0)
+    df1 = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\compatibility_63.csv', index_col=0)
     check_license_list = df1.index.tolist()
-    confilct_copyleft_dict = {}
+    confilct_copyleft_set= set()
     confilct_depend_dict = {}
+    compatibility_result_ab = ''
     for src_file in dependencies.keys():
         dest_file = dependencies[src_file]
         iscompatibility = 0
-        for licenseA in results[src_file]:
-            for licenseB in results[dest_file]:
-                compatibility_result = compatibility_judge(licenseA, licenseB)
-            if compatibility_result != '0':
-                iscompatibility = 1
-        if iscompatibility == 0:
+        ischeck = 0
+        for licenseA in file_license_results[src_file]:
+            for licenseB in file_license_results[dest_file]:
+                if licenseA in check_license_list and licenseB in check_license_list:
+                    ischeck = 1
+                    compatibility_result_ab = compatibility_judge(licenseA, licenseB)
+                if compatibility_result_ab != '0':
+                    iscompatibility = 1
+        if iscompatibility == 0 and ischeck == 1:
             confilct_depend_dict[dest_file] = src_file.replace(temp_path,'')+'的许可证'+licenseA+'不兼容'+dest_file.replace(temp_path,'')+'的许可证'+licenseB
-    have_check = []
-    for fileA in results.keys():
-        for fileB in results.keys():
-            if [fileA,fileB] in have_check:
-                pass
+
+    for licenseA in checked_license_list:
+        for licenseB in checked_license_list:
+            if 'or' not in licenseA:
+                iscompatibility = 0
+                ischeck = 0
+                if 'or' not in licenseB:
+                    ischeck = 1
+                    compatibility_result_ab = compatibility_judge(licenseA, licenseB)
+                    compatibility_result_ba = compatibility_judge(licenseB, licenseA)
+                    if compatibility_result_ab != '0' or compatibility_result_ba != '0':
+                        iscompatibility = 1
+                    if iscompatibility == 0 and ischeck == 1:
+                        confilct_copyleft_set.add(licenseA + "和" + licenseB + "互不兼容。")
+                else:
+                    licenseBs = licenseB.split(' or ')
+                    for lB in licenseBs:
+                        if lB in check_license_list:
+                            ischeck = 1
+                            compatibility_result_ab = compatibility_judge(licenseA, lB)
+                            compatibility_result_ba = compatibility_judge(lB, licenseA)
+                            if compatibility_result_ab != '0' or compatibility_result_ba != '0':
+                                iscompatibility = 1
+                    if iscompatibility == 0 and ischeck == 1:
+                        confilct_copyleft_set.add(licenseA + "和" + licenseB + "互不兼容。")
             else:
-                have_check.append([fileA, fileB])
-                have_check.append([fileB, fileA])
-                licenseAs = results[fileA]
-                licenseBs = results[fileB]
-                if set(licenseAs).issubset(set(check_license_list)) and set(licenseBs).issubset(set(check_license_list)):
-                    iscompatibility = 0
-                    lA = ''
-                    lB = ''
-                    for licenseA in licenseAs:
-                        for licenseB in licenseBs:
-                            lA = licenseA
-                            lB = licenseB
-                            if licenseA in check_license_list and licenseB in check_license_list:
-                                compatibility_result_ab = compatibility_judge(licenseA, licenseB)
-                                compatibility_result_ba = compatibility_judge(licenseB, licenseA)
+                iscompatibility == 0
+                ischeck = 0
+                licenseAs = licenseA.split(' or ')
+                if 'or' not in licenseB:
+                    for lA in licenseAs:
+                        if lA in check_license_list:
+                            ischeck = 1
+                            compatibility_result_ab = compatibility_judge(lA, licenseB)
+                            compatibility_result_ba = compatibility_judge(licenseB, lA)
+                            if compatibility_result_ab != '0' or compatibility_result_ba != '0':
+                                iscompatibility = 1
+                    if iscompatibility == 0 and ischeck == 1:
+                        confilct_copyleft_set.add(licenseA + "和" + licenseB + "互不兼容。")
+                else:
+                    licenseBs = licenseB.split(' or ')
+                    for lA in licenseAs:
+                        for lB in licenseBs:
+                            if lA in check_license_list and lB in check_license_list:
+                                ischeck = 1
+                                compatibility_result_ab = compatibility_judge(lA, lB)
+                                compatibility_result_ba = compatibility_judge(lB, lA)
                                 if compatibility_result_ab != '0' or compatibility_result_ba != '0':
                                     iscompatibility = 1
-                    if iscompatibility == 0:
-                        confilct_copyleft_dict[longestCommonDir(fileA, fileB)] = fileA.replace(temp_path,'') + "的许可证" + lA + "和" + fileB.replace(temp_path,'') + "的许可证" + lB +"互不兼容。"
-    return confilct_copyleft_dict,confilct_depend_dict
+                    if iscompatibility == 0 and ischeck == 1:
+                        confilct_copyleft_set.add(licenseA + "和" + licenseB + "互不兼容。")
+
+    print("互不兼容检查完毕")
+    return list(confilct_copyleft_set),confilct_depend_dict
 
 # 3、许可证选择工具页__依赖识别__共同目录
 def longestCommonDir(fileA,fileB):
@@ -382,9 +418,10 @@ def license_compatibility_filter(in_licenses):
     compatible_both_list = df['license'].tolist()
     compatible_secondary_list = df['license'].tolist()
     compatible_combine_list = df['license'].tolist()
-    df1 = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\compatibility_58.csv', index_col=0)
+    df1 = pd.read_csv(r'E:\OSSLSelection\OSSLSelection\homepage\compatibility_63.csv', index_col=0)
     check_license_list = df1.index.tolist()
     checked_list = []
+    dual_no_checked_license = set()
     for licenseA in list(in_licenses):
         if 'or' not in licenseA:
             if licenseA in check_license_list:
@@ -397,31 +434,50 @@ def license_compatibility_filter(in_licenses):
                     if compatibility_result != '1,2':
                         if licenseB in compatible_both_list:
                             compatible_both_list.remove(licenseB)
-                    if compatibility_result != '1':
+                    if compatibility_result != '1' and compatibility_result != '1,2':
                         if licenseB in compatible_secondary_list:
                             compatible_secondary_list.remove(licenseB)
-                    if compatibility_result != '2':
+                    if compatibility_result != '2' and compatibility_result != '1,2':
                         if licenseB in compatible_combine_list:
                             compatible_combine_list.remove(licenseB)
         else:
-            if licenseA in check_license_list:
+            dual_checked = 0
+            for licenseB in all_licenses:
+                dual_licenses = licenseA.split(' or ')
+                is_remove = 1
+                is_remove_both = 1
+                is_remove_combine = 1
+                is_remove_secondary = 1
+                for sub_license in dual_licenses:
+                    if sub_license in check_license_list:
+                        compatibility_result = str(df1.loc[sub_license, licenseB])
+                        dual_checked = 1
+                    else:
+                        dual_no_checked_license.add(sub_license)
+                    if compatibility_result != '0':
+                        is_remove = 0
+                    if compatibility_result == '1,2':
+                        is_remove_both = 0
+                    if compatibility_result == '1' or compatibility_result == '1,2':
+                        is_remove_secondary = 0
+                    if compatibility_result == '2' or compatibility_result == '1,2':
+                        is_remove_combine = 0
+                if is_remove and licenseB in compatible_licenses:
+                    compatible_licenses.remove(licenseB)
+                if is_remove_both and licenseB in compatible_both_list:
+                    compatible_both_list.remove(licenseB)
+                if is_remove_secondary and licenseB in compatible_secondary_list:
+                    compatible_secondary_list.remove(licenseB)
+                if is_remove_combine and licenseB in compatible_combine_list:
+                    compatible_combine_list.remove(licenseB)
+            if dual_checked == 1:
                 checked_list.append(licenseA)
-                for licenseB in all_licenses:
-                    dual_licenses = licenseA.split(' or ')
-                    is_remove = 1
-                    for sub_license in dual_licenses:
-                        if sub_license in check_license_list:
-                            compatibility_result = str(df1.loc[sub_license, licenseB])
-                        if compatibility_result != '0':
-                            is_remove = 0
-                    if is_remove and licenseB in compatible_licenses:
-                        compatible_licenses.remove(licenseB)
     llist = list(in_licenses)
     llist = sorted(llist)
     if 'Other' in llist:
         llist.append('Other')
         llist.remove('Other')
-    return llist, checked_list, compatible_licenses, compatible_both_list, compatible_secondary_list, compatible_combine_list
+    return llist, checked_list, compatible_licenses, compatible_both_list, compatible_secondary_list, compatible_combine_list,list(dual_no_checked_license)
 
 
 # 3、许可证选择工具页__许可证类型推荐
