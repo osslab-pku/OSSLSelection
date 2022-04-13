@@ -1,0 +1,269 @@
+#
+#    Copyright (C) 2009-2014  Yuki Manabe and Daniel M. German
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as
+#    published by the Free Software Foundation; either version 2 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# this ones are deprecated, I think
+# some rules that supersets should be done first
+# 新增AGPL-3.0、EPL-2.0、ISC、Artistic-1.0-Perl、Artistic-2.0、MulanPSL-2.0、MulanPubL-2.0
+# 修改了CDDLorGPL-2.0
+
+AGPL-3.0:AGPLGenVer3\.0
+AGPL-3.0:AGPLGenVer3
+AGPL-3.0+:AGPLGenVer3\.0\+
+AGPL-3.0+:AGPLGenVer3\+
+Apache-1.0:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvPart1,BSDcondAdvPart2,OpenSSLendorse,OpenSSLwritCond,OpenSSLName,OpenSSLAckPart1,BSDcondAdvPart2,BSDasIs,BSDWarr
+Apache-1.1:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdv,OpenSSLendorse,OpenSSLwritCond,OpenSSLName,OpenSSLAck,BSDasIs,BSDWarr
+Apache-1.1:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvPart1,BSDcondAdvPart2,OpenSSLendorse,OpenSSLwritCond,OpenSSLName,BSDasIs,BSDWarr
+Apache-1.1:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvPart2,OpenSSLendorse,OpenSSLwritCond,OpenSSLName,BSDasIs,BSDWarr
+Apache-1.1:BSDpre,BSDcondSourceExtrict,BSDcondBinary,BSDcondAdvPart2,OpenSSLendorse,OpenSSLwritCond,OpenSSLName,BSDasIs,BSDWarr
+Apache-2.0:Apache-2,ApacheLicWherePart1,ApacheLicWherePart2v2,ApachesAsIs,ApachesPermLim
+Apache-2.0:Apache-2,ApacheLicWherePart1,ApacheLicWherePart2v2
+Apache-2.0:Apache-2
+Artistic-1.0-Perl:ArtisticLicensev1Perl
+Artistic-1.0:ArtisticLicensev1
+Artistic-2.0:ArtisticLicensev2
+Artistic-2.0:ArtisticLicv2preamble1
+
+
+Beerware:BeerWareVer42LicPart1,BeerWareVer42LicPart2,BeerWareVer42LicPart3,BeerWareVer42LicPart4
+BSL-1.0:boostPermission,boostPreserve,boostAsIs,boostWarr
+BSL-1.0:boostRefv1
+BSL-1.0:boostSeev1
+BSD-4-Clause:BSDpre,BSDcondSourceExtrict,BSDcondBinaryExtrict,BSDcondAdvPart1Extrict,BSDcondAdvPart2Extrict,BSDcondEndorseExtrict,BSDasIsExtrict,BSDWarrExtrict
+BSD-3-Clause:BSDpre,BSDcondSourceExtrict,BSDcondBinaryExtrict,BSDcondEndorseExtrict,BSDasIsExtrict,BSDWarrExtrict
+BSD-2-Clause:BSDpre,BSDcondSourceExtrict,BSDcondBinaryExtrict,BSDasIsExtrict,BSDWarrExtrict
+BSD-4-Clause:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvPart1,BSDcondAdvPart2,BSDcondEndorseRULE,BSDasIs,BSDWarr
+BSD-4-Clause:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvRULE,BSDcondEndorseRULE,BSDasIs,BSDWarr
+BSD-3-Clause:BSDpre,BSDcondSource,BSDcondBinary,BSDcondEndorseRULE,BSDasIs,BSDWarr
+BSD-3-Clause:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvPart1,BSDcondAdvPart2,BSDasIs,BSDWarr
+BSD-3-Clause:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvPart1,BSDcondAdvPart2,BSDcondAdvRULE,BSDasIs,BSDWarr
+BSD-3-Clause-NoWarranty:BSDpre,BSDcondSource,BSDcondBinary,BSDcondEndorseRULE,BSDasIs
+BSD-4-Clause-NoEndor:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvRULE,BSDasIs,BSDWarr
+BSD-2-Clause:BSDpre,BSDcondSource,BSDcondBinary,BSDasIs,BSDWarr
+BSD-2-Clause-EndorseInsteadOfBinary:BSDpre,BSDcondSource,BSDcondEndorseRULE,BSDasIs,BSDWarr
+BSD-2-Clause-AdvInsteadOfBinary:BSDpre,BSDcondSource,BSDcondAdvRULE,BSDasIs,BSDWarr
+BSD-1-Clause:BSDpre,BSDcondBinary,BSDasIs,BSDWarr
+BSD-OnlyAdv:BSDpre,BSDcondAdvRULE,BSDasIs,BSDWarr
+BSD-OnlyEndorseNoWarranty:BSDpreLike,BSDcondEndorseRULE,BSDasIs
+BSD-2-Clause-Variant:BSDpre,BSDCondSourceVariant,BSDcondBinary,BSDasIs,BSDWarr
+BSD-2-Clause-Variant:BSDpre,BSDCondSourceVariant2,BSDcondBinary,BSDasIs,BSDWarr
+BSD-2-Clause-aic700:BSDpre,BSDcondSource,BSDcondBinaryVar1,AsIsVariant2,LiabilityBSDVariantAIC700
+BSD-2-Clause-SoftAndDoc:BSDpreSoftAndDoc,BSDcondSourceOrDoc,BSDcondBinary,BSDasIsSoftAndDoc,BSDWarr
+BSD-CairoStyleWarr:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvPart2,OpenSSLwritCond,OpenSSLName,BSDasIs,BSDWarr
+BSD-dovecotStyle:BSDpre,BSDcondSource,BSDcondBinary,OpenSSLendorse,DovecotwriteCod,OpenSSLAckPart1,BSDcondAdvPart2,MITstyleCairoWarranty
+
+CPL-1.0:CPLv1
+CPL-0.5:CPLv0.5
+CDDL-1.0:CDDLic
+CDDL-1.0:CDDLicV1Only
+CECILL:CecillEn1,CecillEn2,CecillEn3,CecillEn4,CecillEn5,CecillEn6,CecillEn7,CecillEn8
+# CC0-1.0:
+
+EPL-1.0:EPLv1
+EPL-2.0:EPLv2
+EPL-2.0:EPLv2name,EPLv2pre
+
+FSFUL:FSFUnlimited
+
+GPL-2.0:GPLv2
+GPL-2.0+:GPLv2\+
+GPL-3.0+:GPLv3\+
+GPL-3.0:GPLv3
+GPL-1.0+:GPLv1\+
+GPL-1.0:GPLGenVer1
+GPL-1.0+:GPLGenVer1\+
+GPL-2.0:GPLGenVer2
+GPL-2.0:GPLGenVer2.0
+GPL-2.0+:GPLGenVer2\+
+GPL-2.0+:GPLGenVer2.0\+
+GPL-3.0:GPLGenVer3
+GPL-3.0+:GPLGenVer3\+
+GPL-3.0+:GPLGenVer3\.0\+
+GPL-noVersion:GPLnoVersionVer0
+GPL-noVersion:GPLnoVersion
+GPL-3.0:qtGPLVer3.0
+GPL-3.0:qtGPLVer3
+GPL-2.0:qtGPLv2where
+
+
+# ICU:
+IBM-1.0:IBMv1
+Intel-ACPI:IntelPart02,IntelPart03,IntelPart04,IntelPart05,IntelPart06,IntelPart07,IntelPart08,IntelPart09,IntelPart10,IntelPart11,IntelPart12,IntelPart13,IntelPart14,IntelPart15,IntelPart16,IntelPart17,IntelPart18,IntelPart19,IntelPart20,IntelPart21,IntelPart22,IntelPart23,IntelPart24,IntelPart25,IntelPart26,IntelPart27,IntelPart28
+ISC:ISCpermission,BSDasIs,BSDWarr
+
+LGPL-2.1:qtLGPLv2.1where
+LGPL-2.1:qtLGPLVer2.1
+LGPL-2.0:qtLGPLv2where
+LGPL-2.0:qtLGPLVer2
+LGPL-2.0:qtLGPLVer2.0
+LGPL-2.0+:LGPLv2\+MISTAKE
+LGPL-2.0:LGPLv2MISTAKE
+LGPL-2.1:LGPLv2_1
+LGPL-2.0:LGPLv2
+LGPL-2.0+:LGPLv2\+
+LGPL-2.1+:LGPLv2\.1\+
+LGPL-2.1:LGPLv2\.1
+LGPL-3.0:LGPLv3
+LGPL-3.0+:LGPLv3\+
+LGPL-noVersion:LesserGPLnoVersionVer0
+LGPL-noVersion:LesserGPLnoVersion
+LGPL-noVersion:LibraryGPLnoVersionVer0
+LGPL-noVersion:LesserGPLnoVersionVer0
+LGPL-3.0+:LesserGPLGenVer3\+
+LGPL-3.0:LesserGPLGenVer3
+LGPL-2.1:LesserGPLGenVer2\.1
+LGPL-2.1:LGPLV2_1Ver0
+LGPL-2.1+:LesserGPLGenVer2\.1\+
+LGPL-2.0:LibraryGPLGenVer2\.0\+|LibraryGPLGenVer2
+LGPL-2.0+:LibraryGPLGenVer2\.0\+|LibraryGPLGenVer2\+
+LGPL-2.0+:LesserGPLGenVer2\.0\+|LesserGPLGenVer2\+
+LGPL-2.0:LesserGPLGenVer2.0|LesserGPLGenVer2
+LGPL-2.1:qtLGPLVer2.1
+# libpng-2.0:
+LibGCJ:LibGCJLic
+
+MIT:MITpermissionExtrict,X11noticeExtrict,X11asIsExtrict,X11asLiableExtrict
+MIT-Modern-Variant:MITmodermPerm,MITmodernLiable,MITmodermWarr,MitmodernAsIs
+MIT-Variant:MITpermWithoutEndor,MITnorep,MITasis
+MIT-CMU:MITpermNoSellVer3,CMUAsIs,CMULiability
+MIT-CMU-Variant:MITpermNoSell,X11CMULiability,X11CMUredistribute
+MIT-CMU-Variant:X11CMUlicPerm,X11CMUAsIs,X11CMUlicLiability
+MIT-old:MITperm,MITnorep,MITasis
+MIT-old-withoutSell:MITperNoSell,MITnorep,MITasis
+MIT-old-withoutSellCMUVariant:MITpermNoSell,X11CMUAsIs,X11CMULiability,X11CMUredistribute
+MIT-old-withoutSell:MITpermNoSell,MITandGPLasis,MITandGPLwar
+MIT-old-withoutSellandNoDocumentationRequi:MITpermNoSellNoDoc,BSDasIs,BSDWarr
+MIT-old-withoutSellandNoDocumentationRequi:MITpermNoSellNoDoc,MITnorep,MITasis
+MIT-old-MichiganVersion:MITpermNoSell,WarrantySupplied
+MPL-1.1:MPLv1_1
+NPL-1.1:NPLv1_1
+MPL-1.0:MPLv1_0
+NPL-1.0:NPLv1_0
+MPL-2.0:MPLv2part1,MPLv2part2
+MulanPSL-2.0:MulanPSL-2
+MulanPubL-2.0:MulanPubL-2
+
+NCSA:X11per,BSDcondSource,BSDcondBinary,BSDcondEndorse,X11asIs,X11asLiable
+
+openSSL:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdv,OpenSSLendorse,OpenSSLwritCond,OpenSSLName,OpenSSLAck,BSDasIs,BSDWarr
+openSSL-Variant:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvPart1,BSDcondAdvPart2,SSLeayWindows,BSDcondAdvPart2,BSDasIs,BSDWarr,NoLicenseChangeAllowed
+openSSL-Variant:BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvPart1,BSDcondAdvPart2,OpenSSLendorse,OpenSSLwritCond,BSDasIs,BSDWarr
+
+PHP-3.01:phpLic3.01
+PublicDomain:publicDomain
+PostgreSQL:psql,psqlLiab,psqlWarr,psqlWarr2
+PostgreSQL:postgresqlRef
+
+Qt:qtCommercialuseVer0
+QPL-1.0:QTv1
+
+# SSPL-1.0:
+Sleepycat:SleepyCatNameExtrict,AllRights,BSDpre,BSDcondSourceExtrict,BSDcondBinaryExtrict,SleepyCatObtain,SleepyCatSourceIncluded,SleepyCatSourceComplete,SleepyCatDoesNotInclude,SleepyCatAsIs,BSDWarrExtrict,AllRights,BSDpre,BSDcondSourceExtrict,BSDcondBinaryExtrict,BSDcondEndorseExtrict,BSDasIsExtrict,BSDWarrExtrict,AllRights,BSDpre,BSDcondSourceExtrict,BSDcondBinaryExtrict,BSDcondEndorseExtrict,BSDasIsExtrict,BSDWarrExtrict
+Sleepycat:BSDpre,BSDcondSource,BSDcondBinary,SleepyCatObtain,SleepyCatSourceIncluded,SleepyCatSourceComplete,SleepyCatDoesNotInclude,SleepyCatAsIs,BSDWarr
+
+TMate+:tmatePlus
+
+# Unlicense:
+
+W3C:W3CLic
+WTFPL:DoWhatTheFuckYouWantv2
+
+X11:X11per,X11notice,X11asIs,X11asLiable,X11adv
+X11:X11notice,X11asIs,X11asLiable
+X11:MITpermWithoutEndor,X11notice,X11asIs,X11asLiable,X11adv
+X11-noNotice:X11asIs,X11asLiable
+X11-Festival:X11FestivalPerm,X11FestivalNotice,X11FestivalNoEndorse,MITstyleCairoWarranty
+X11-BSD-Variant:MITpermAndOr,BSDasIs,BSDWarr
+X11-simple:X11per,X11notice,X11asIs
+X11-NoSellNoDocDocBSDvar:MITpermNoSellNoDoc,X11asIsLike,BSDWarr
+X11-Bind:MITpermAndOr,X11asIsLike,BSDWarr
+X11-CMU:X11CMUlicPerm,X11CMUAsIs,X11CMUlicLiability,X11CMUlicReturn
+
+zend-2.0:zendv2
+Zlib:BSDpre,BSDcondSource,originNotMisrepresented,BSDZlibAck,BSDZlibAltered,BSDcondEndorseRULE,BSDasIs,BSDWarr
+Zlib:ZLibRef
+
+# miscellaneous
+intelBSDLicense:BSDpre,BSDcondSource,BSDcondBinary,BSDcondEndorseRULE,BSDasIs,BSDWarr,intelBSDexport1,intelBSDexport2,intelBSDexport3
+SimpleOnlyKeepCopyright:SimpleOnlyKeepCopyright
+SSLeay:SSLCopy,SSLeayAttrib,SSLeayAdType,BSDpre,BSDcondSource,BSDcondBinary,BSDcondAdvRULE,SSLeayCrypto,SSLeayWindows,BSDasIs,BSDWarr,SSLeayCantChangeLic
+MX4J:MX4JLicense1,SeeMX4JLicense
+simpleLicense1:simpleLic1part1
+simpleLic2:simpleLic2
+simpleLic:simpleLic
+SimpleLic:SimpleLic
+sunRPC:sunRPCLic1,sunRPCLic2,sunRCPnoWarranty,sunRCPnoSupport
+SeeFile:SeeFile
+SunSimpleLic:SunSimpleLic
+Emacs:EmacsLicense
+SameTermsAs:SameTermsAs
+GhostscriptGPL:GhostscriptGPL
+SameAsPerl:SameAsPerl
+FreeType:FreeType
+Postfix:Postfix
+subversion+:subversion,subversionPlus
+subversion:subversion
+svnkit+:svnkitPlus
+svnkit:svnkit
+sequenceLic:sequenceLic
+subversionError:subversionError
+artifex:artifex
+MX4JLicensev1:MX4JLicense1.0
+dovecotSeeCopying:dovecotSeeCopying
+kerberos:exportLicRequired,exportNoLia,exportMITper,exportMITmodify,MITnorep,MITasis
+
+# dual licenses
+GPL-2.0 or BSD-3-Clause:BSDpre,BSDcondSourceExtrict,BSDcondBinaryExtrict,BSDcondEndorse,Altern,GPLGenVer2,BSDasIsExtrict,BSDWarrExtrict
+LGPL-2.0 or LGPL-3.0:LGPLv2orv3
+LGPL-2.1 or LGPL-3.0:LGPLv2_1orv3
+GPL-2.0 or GPL-3.0:GPLv2orv3
+GPL-1.0 or Artistic-2.0:GPLv1orArtistic
+# GPL-2.0 or OpenIB:GPLorOpenBSDTypeVer2,BSDpre,BSDcondSource,BSDcondBinary,X11asIs,X11asLiable
+CDDL-1.0 or GPL-2.0:CDDLorGPLv2,CDDLorGPLv2compliance,CDDLorGPLv2where,ApachesPermLim,CDDLorGPLv2include
+Apache-2.0 or LGPL-2.0:apacheAndLGPLgenVer2.0
+
+CDDL-1.0 or GPL-2.0:CDDLorGPLv2ifYouWish,CDDLorGPLv2IfYouAdd
+CDDL or GPL-2.0:CDDLorGPLVer2
+CDDL or GPL-2.0:CDDLorGPLv2
+MPL or MIT:MPL-MIT-dual1,MPL-MIT-dual2
+MPL or GPL-2.0+ or LGPL-2.1+:Altern,GPLv2orLGPLv2\.1Ver2\+,MPLoptionNOTGPLVer0,MPLoptionIfNotDelete3licsVer0
+CPL-1.0 or GPL-2.0+ or LGPL-2.0+:CPL1_GPL2_LGPL2_1intentionVer0,CPLv1,ApacheLicWherePart1,MPLwarranty,MPLsee,Copyright,Altern,GPLv2orLGPLv2\.1Ver2\+,CPLoptionNOTGPLVer0,CPLoptionIfNotDelete3licsVer0
+MPL or LGPL:MPL_LGPLsee
+MPL or GPL-2.0 or LGPL-2.1:MPLGPL2orLGPLv2_1
+MPL-1.1 or LGPL-2.1:MPL1_1andLGPLVer2.1
+MIT and GPL:MITandGPLper,MITandGPLgpl,MITandGPLplease,MITandGPLasis,MITandGPLwar
+Qt or GPL-2.0 or GPL-3.0:qtGPLv2or3
+GPL-2.0 or GPL-3.0-KDE+:GPLGenKDEor3\+Ver2,FSFwarranty,GPLseeDetailsVer0,GPLcopyVer0,GNUurl
+LGPL-2.1 or LGPL-3.0-KDE+:LGPLGenKDEor3Ver2\.1\+,FSFwarranty,LesserGPLseeDetailsVer0,GPLcopyVer0
+GPL-2.0 or LGPL-2.1:GPLv2orLGPLv2\.1Ver2
+GPL-2.0+ or LGPL-2.1:GPLv2orLGPLv2\.1Ver2\+
+# GPL-2.0 or GPL-3.0 or TrolltechKDE-approved:GPLv2orv3Ver0,Altern,laterTrolltechKDE-approvedVer0
+EPL-2.0 or Apache-2.0:EPLv2orApache2
+
+# Exceptions
+BisonException:BisonException
+ClassPathException:ClassPathException
+ClassPathExceptionGPLv2:ClassPathExceptionVer2
+Exception:Exception
+LinkException:LinkException
+LinkExceptionBison:LinkExceptionBison
+LinkExceptionGPL:LinkExceptionGPL
+LinkExceptionLeGPL:LinkExceptionLeGPL
+LinkExceptionOpenSSL:LinkExceptionOpenSSL
+WxException:wxLinkExceptionPart1,wxLinkExceptionPart2,wxLinkExceptionPart3Ver0,wxLinkExceptionPart4,wxLinkExceptionPart5,wxLinkExceptionPart6
+autoConfException:autoConfExceptionVer0
+qtWindowsException1.3:qtExceptionNoticeVer1.3
+qtExceptionWindows:qtExceptionWindows
+digiaQTExceptionNoticeVer1.1:digiaQTExceptionNoticeVer1.1

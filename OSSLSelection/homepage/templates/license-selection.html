@@ -66,7 +66,7 @@
 	<div id="flow_detail"  style="position:absolute;width:1280px;height:490px;z-index:999999;display:none;background:#f8f8f8;border:1px solid #ddd">
 		<a id="close_detail" style="position:absolute;display:inline-block;margin:4px 20px 25px 1250px;width:20px;height:20px;line-height:25px;cursor:pointer;border:1px;vertical-align:top;text-align:left;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-square-fill text-info" viewBox="0 0 16 16"><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/></svg></a>
 		<!--<table class="table-hover" id="detail_license_table" style="width: 100%; border-collapse:collapse;  border-spacing:0; "></table>-->
-		<div class="pre-scrollable" style="margin-top:25px;">
+		<div class="pre-scrollable" style="margin-top:25px;height:350px">
 			<ul id="treeDemo" class="ztree"></ul>
 		</div>
 		<div style="margin-top:5px;margin-left:20px;font-size:14px;border-top:1px solid #ddd;">互不兼容警告：</div>
@@ -139,7 +139,7 @@
 									但允许将代码集成到自己的软件中，而不必使整个代码库开源，合并这些软件的大型作品可以成为私有作品，<b>”文件级/模块级/库级“</b>是指许可证的copyleft范围，如MPL-2.0是弱限制型开源许可证，只要专有代码与MPL-2.0授权代码位于不同文件，即可隔离传染等。</p></div>
 						<div class="radio-area">
 							<div><label><input name="question2" type="radio" style="outline:none" value="文件级__弱限制型开源许可证" />A、文件级__弱限制型开源许可证</label></div>
-							<div><label><input name="question2" type="radio" style="outline:none" value="模块级__弱限制型开源许可证" />B、模块级__弱限制型开源许可证</label></div>
+							<div><label><input name="question2" type="radio" style="outline:none" value="库级__弱限制型开源许可证" />B、库级__弱限制型开源许可证</label></div>
 							<div><label><input name="question2" type="radio" style="outline:none" value="强限制型开源许可证" />C、强限制型开源许可证</label></div>
 						</div>
 					</div>
@@ -180,8 +180,8 @@
 									”网络交互视为分发“是指用户使用开源软件或其衍生软件进行”网络交互“，须按照获得该软件的许可证授权并分发其源代码，
 									例如在云中使用AGPL-3.0授权的软件提供在线服务也须要发布其源代码。</p></div>
 						<div class="radio-area">
-							<div><label><input name="question6" type="radio" style="outline:none" value="网络部署视为分发" />A、网络交互视为分发</label></div>
-							<div><label><input name="question6" type="radio" style="outline:none" value="网络部署不视为分发" />B、网络交互不视为分发</label></div>
+							<div><label><input name="question6" type="radio" style="outline:none" value="网络部署公开源码" />A、网络交互公开源码</label></div>
+							<div><label><input name="question6" type="radio" style="outline:none" value="网络部署不须公开源码" />B、网络交互不须公开源码</label></div>
 						</div>
 					</div>
 					<div id="license_question7" class="terms_question_area" style="display:none;">
