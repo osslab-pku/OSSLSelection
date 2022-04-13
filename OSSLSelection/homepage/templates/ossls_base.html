@@ -12,21 +12,9 @@
 	<meta name=author content="Enventer">
 	<link rel="icon" href="/static/img/favicon.png" type="image/png">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-
-	<!-- Google Font -->
-	<link href="https://fonts.googleapis.com/css?family=Nunito:400,700,900&display=swap" rel="stylesheet">
-	<!-- Meanmenu css -->
-	<link rel="stylesheet" href="/static/css/meanmenu.css">
-	<!-- Magnific css -->
-	<link rel="stylesheet" href="/static/css/magnific-popup.min.css">
-	<!-- Animation CSS -->
-	<link href="/static/css/aos.min.css" rel="stylesheet">
-	<!-- Slick Carousel CSS -->
-	<link href="/static/css/slick.css" rel="stylesheet">
-
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="/static/css/style.css">
-<!--	<link rel="stylesheet" href="/static/css/responsive.css">-->
+
 	{% block extraCSS %}{% endblock %}
 </head>
 
@@ -77,18 +65,13 @@
 		</div>
 	</header>
 
-
-
 	<div class="team-area">
 		{% block beforebody %}
-
 		{% endblock %}
-
 		<div class="container" >
 			{% block body %}
 			{% endblock %}
 		</div>
-
 	</div>
 
 
@@ -99,15 +82,13 @@
 	</footer>
 
 	<!-- Jquery JS -->
-	<script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
+	<script src="/static/js/jquery-2.2.4.min.js"></script>
 	<!-- Proper JS -->
 	<script src="/static/js/popper.min.js"></script>
 	<!-- Bootstrap Js -->
 	<script src="/static/js/bootstrap.min.js"></script>
 	<!-- Video popup Js -->
 	<script src="/static/js/magnific-popup.min.js"></script>
-	<!-- Waypoint Up Js -->
-	<script src="/static/js/waypoints.min.js"></script>
 	<!-- Counter Up Js -->
 	<script src="/static/js/counterup.min.js"></script>
 	<!-- Meanmenu Js -->
@@ -124,8 +105,8 @@
 	<script src="/static/js/scrollUp.js"></script>
 	<!-- Main Js -->
 	<script src="/static/js/main.js"></script>
-	{% block extraJS %}{% endblock %}
-
+	{% block extraJS %}
+	{% endblock %}
 </body>
 
 </html>

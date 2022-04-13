@@ -1,18 +1,15 @@
 {% extends 'ossls_base.html' %}
 
 {% block extraCSS %}
-	<link rel="stylesheet" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+	<!--Bootstrap CSS-->
 	<link rel="stylesheet" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-    <link href="/static/css/foundation.min.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/foundation-datepicker.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="/static/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" href="/static/css/default.css">
+	<!--选择列表框 CSS-->
 	<link rel="stylesheet" href="/static/css/bootstrap-select.css">
 {% endblock %}
 
 {% block beforebody %}
-	<!--流程图标-->
-	<div style="margin:80px 0px 50px 0px;" >
+	<!--留白-->
+	<div style="margin:60px 0px 50px 0px;" >
 	</div>
 {% endblock %}
 {% block body %}
@@ -92,8 +89,7 @@
 {% endblock %}
 
 {% block extraJS %}
-	<script src="/static/js/foundation-datepicker.min.js"></script>
-    <script src="/static/js/locales/foundation-datepicker.zh-CN.js"></script>
+	<!--可视化echart JS-->
 	<script src="https://cdn.bootcdn.net/ajax/libs/echarts/4.2.1/echarts.js"></script>
 	<!--选择列表CSS-->
 	<script type="text/javascript" src="/static/js/bootstrap-select.js"></script>

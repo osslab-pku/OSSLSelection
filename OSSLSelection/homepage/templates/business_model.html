@@ -1,10 +1,10 @@
 {% extends 'ossls_base.html' %}
 
 {% block extraCSS %}
+	<!--Bootstrap CSS-->
 	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<!--滑动显示swiper CSS-->
 	<link rel="stylesheet" href="/static/css/swiper.min.css">
-	<script src="/static/js/swiper.min.js"></script>
-	<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
 {% endblock %}
 
 
@@ -175,6 +175,9 @@
 {% endblock %}
 
 {% block extraJS %}
+	<!--滑动显示swiper JS-->
+	<script src="/static/js/swiper.min.js"></script>
+
 	<script type="text/javascript">
 		$(function(){
 			/*图片位置计算*/
