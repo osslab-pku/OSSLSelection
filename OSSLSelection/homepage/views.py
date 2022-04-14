@@ -54,20 +54,20 @@ def license_compatibility_judge(request):
         elif compatibility_result == '1':
             iscompatibility = licenseA + "次级兼容" + licenseB + "。"
             how_to_use = license_compatibility3_reason(licenseA,licenseB) + "您可以修改或使用（包括但不限于链接、复制粘贴等方式）" + licenseA + "授权的作品，所产生的衍生作品可以采用" + licenseB + "授权，" \
-                         + "衍生作品的整体及其部分（包括原" + licenseA + "授权的部分）都将受" + licenseB + "的约束，请注意许可证信息的变更管理。"
+                         + "衍生作品的整体及其部分（包括原" + licenseA + "授权的部分）都将受" + licenseB + "的约束，请注意许可证信息的管理。"
             why_or_why_not = license_uncompatibility2_reason(licenseA, licenseB)
         elif compatibility_result == '2':
             iscompatibility = licenseA + "组合兼容" + licenseB + "。"
             how_to_use = license_compatibility3_reason(licenseA,licenseB) + "您可以修改或使用（包括但不限于链接、复制粘贴等方式）" + licenseA + "授权的作品，所产生的衍生作品的整体可以采用" + licenseB + "授权，" \
-                         + "但须确保该衍生作品中原" + licenseA + "授权的部分及其修改仍然受" + licenseA + "的约束（不进行许可证变更），而" + licenseB + "约束除" + licenseA + "授权部分的其他部分。"
+                         + "但须确保该衍生作品中原" + licenseA + "授权的部分及其修改仍然受" + licenseA + "的约束，而" + licenseB + "约束除" + licenseA + "授权部分的其他部分。"
             why_or_why_not,compatibility_terms =  license_uncompatibility1_reason(licenseA, licenseB)
         elif compatibility_result == '1,2':
             iscompatibility = licenseA + "次级兼容且组合兼容" + licenseB + "。"
             how_to_use = license_compatibility3_reason(licenseA,licenseB) + "您可以任选一种兼容性场景进行许可证管理。（1）若您选择次级兼容，则" + "您可以修改或使用（包括但不限于链接、复制粘贴等方式）" \
                          + licenseA + "授权的作品，所产生的衍生作品可以采用" + licenseB + "授权，" + "衍生作品的整体及其部分（包括原" + licenseA \
-                         + "授权的部分）都将受" + licenseB + "的约束，请注意许可证信息的变更管理；（2）若您选择组合兼容，则" + "您可以修改或使用（包括但不限于链接、复制粘贴等方式）" \
+                         + "授权的部分）都将受" + licenseB + "的约束，请注意许可证信息的管理；（2）若您选择组合兼容，则" + "您可以修改或使用（包括但不限于链接、复制粘贴等方式）" \
                          + licenseA + "授权的作品，所产生的衍生作品的整体可以采用" + licenseB + "授权，" + "但须确保该衍生作品中原" + licenseA \
-                         + "授权的部分及其修改仍然受" + licenseA + "的约束（不进行许可证变更），而" + licenseB + "约束除" + licenseA + "授权部分的其他部分。"
+                         + "授权的部分及其修改仍然受" + licenseA + "的约束，而" + licenseB + "约束除" + licenseA + "授权部分的其他部分。"
             why_or_why_not = ""
     return JsonResponse({"licenseA": licenseA,
                          "licenseB": licenseB,
@@ -163,12 +163,12 @@ def license_uncompatibility2_reason(licenseA,licenseB):
     licenseB_terms = df[df['license'] == licenseB].to_dict(orient='records')[0]
     if licenseA_terms['copyleft'] != 3 and licenseB_terms['copyleft'] == 2 :
         reason = reason + licenseB + "是库级弱限制型开源许可证，不限制通过接口调用该许可证授权作品的其他作品，但要求其约束部分（包括但不限于其包含的文件、其调用的组件等）都遵循其copyleft特性，若使用（包括但不限于调用、复制粘贴等方式）了" \
-                 + licenseA + "授权的作品，" + licenseA + "授权的部分须遵循" + licenseB + "，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
+                 + licenseA + "授权的作品，" + licenseA + "授权的部分须遵循" + licenseB + "，因此无法满足组合兼容的场景。"
     elif licenseA_terms['copyleft'] != 3 and licenseB_terms['copyleft'] == 3 :
         reason = reason + licenseB + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，若使用（包括但不限于调用、复制粘贴等方式）了" \
-                 + licenseA + "授权的作品，" + licenseA + "授权的部分须遵循" + licenseB + "，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
+                 + licenseA + "授权的作品，" + licenseA + "授权的部分须遵循" + licenseB + "，因此无法满足组合兼容的场景。"
     elif licenseA_terms['copyleft'] == 3:
-        reason = reason + licenseA + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，在不变更许可证的前提下不能进行组合，因此无法满足组合兼容的场景。"
+        reason = reason + licenseA + "是强限制型开源许可证，要求其授权作品的整体及其部分都遵循其copyleft特性，因此无法满足组合兼容的场景。"
     return reason
 
 @register.filter
