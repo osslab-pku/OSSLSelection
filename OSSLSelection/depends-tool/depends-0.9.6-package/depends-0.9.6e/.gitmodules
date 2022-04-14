@@ -1,3 +1,0 @@
-[submodule "3rdparty/ruby"]
-	path = 3rdparty/ruby
-	url = https://github.com/multilang-depends/ruby-parser-antlr4

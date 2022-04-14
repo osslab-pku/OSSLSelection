@@ -1,3 +1,0 @@
-1、下载depends的release版，并解压到E:\oss_license_selection_analyze\depends-tool
-2、安装jre8并配置环境变量
-3、cmd命令行cd到E:\oss_license_selection_analyze\depends-tool\depends-0.9.6-package\depends-0.9.6，执行java -jar depends.jar <lang> <src_path> <output_file>
