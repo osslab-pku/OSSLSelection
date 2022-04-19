@@ -163,6 +163,7 @@
 						var myChart = echarts.init(dom);
 						var date = result['datelist'];//逐月
 						var option = {
+							animationDuration:5000,
 							title:{
 								show:true,
 								text:'license逐年采用趋势',
@@ -232,7 +233,7 @@
 							dataZoom: [
 								{//图标下方的拖动条
 									type: 'inside',
-									start: 50,
+									start: 0,
 									end: 100
 								},
 								{
@@ -249,7 +250,7 @@
 							}],
 							series:getSeriesList()
 						}
-
+						myChart.clear();
 						myChart.setOption(option,true);
 
 						/** 根据数据创建图例 **/
